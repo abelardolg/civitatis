@@ -2,7 +2,6 @@
 
 namespace App\CivitatisSoftware\Activity\Domain;
 
-use DatePeriod;
 use DateTimeImmutable;
 use InvalidArgumentException;
 use Symfony\Component\Uid\Uuid;
@@ -11,25 +10,37 @@ final class Activity
 {
     const MAX_TITLE_LENGTH = 64;
     const MAX_POPULARITY = 10;
+
+    private int $id;
     protected string $title;
     protected string $description;
-    protected DatePeriod $availabilityDateRange;
+    protected DateTimeImmutable $availabilityStartDate;
+    protected DateTimeImmutable $availabilityEndDate;
     protected float $pricePerPax;
     protected int $popularity;
     protected DateTimeImmutable $createdAt;
     protected DateTimeImmutable $updatedAt;
-    private int $id;
 
-    public function __construct(int $id, string $title, string $description, DatePeriod $availabilityDateRange, float $pricePerPax, int $popularity)
+    public function __construct(int $id, string $title, string $description, DateTimeImmutable $availabilityStartDate,
+                                DateTimeImmutable $availabilityEndDate, float $pricePerPax, int $popularity)
     {
         $this->id = $id;
         $this->setTitle($title);
         $this->description = $description;
-        $this->setAvailabilityDateRange($availabilityDateRange);
+        $this->setAvailabilityStartDate($availabilityStartDate);
+        $this->setAvailabilityEndDate($availabilityEndDate);
         $this->setPricePerPax(floatval($pricePerPax));
         $this->setPopularity($popularity);
         $this->createdAt = new DateTimeImmutable();
         $this->markAsUpdated();
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle(): string
+    {
+        return $this->title;
     }
 
     /**
@@ -44,15 +55,51 @@ final class Activity
     }
 
     /**
-     * @param DatePeriod $availabilityDateRange
+     * @return DateTimeImmutable
      */
-    private function setAvailabilityDateRange(DatePeriod $availabilityDateRange): void
+    public function getAvailabilityStartDate(): DateTimeImmutable
     {
+        return $this->availabilityStartDate;
+    }
+
+
+    /**
+     * @param DateTimeImmutable $availabilityStartDate
+     */
+    private function setAvailabilityStartDate(DateTimeImmutable $availabilityStartDate): void
+    {
+        if (isNull($availabilityStartDate)) {
+            throw new InvalidArgumentException("La fecha de comienzo debe tener un valor");
+        }
         $hoy = new DateTimeImmutable();
-        if ($availabilityDateRange->getStartDate() < $hoy) {
+        if ($availabilityStartDate < $hoy) {
             throw new InvalidArgumentException("La fecha de comienzo de la actividad no puede ser anterior a hoy");
         }
-        $this->availabilityDateRange = $availabilityDateRange;
+        $this->availabilityStartDate = $availabilityStartDate;
+    }
+
+    /**
+     * @return DateTimeImmutable
+     */
+    public function getAvailabilityEndDate(): DateTimeImmutable
+    {
+        return $this->availabilityEndDate;
+    }
+
+    /**
+     * @param DateTimeImmutable $availabilityEndDate
+     */
+    private function setAvailabilityEndDate(DateTimeImmutable $availabilityEndDate): void
+    {
+        if (isNull($availabilityEndDate)) {
+            throw new InvalidArgumentException("La fecha de final de la actividad debe tener un valor");
+        }
+        $hoy = new DateTimeImmutable();
+        $availabilityStartDate = $this->getAvailabilityStartDate();
+        if (!isNull($availabilityStartDate) && ($availabilityEndDate < $availabilityStartDate)) {
+            throw new InvalidArgumentException("La fecha de final de la actividad no puede ser anterior a la de su comienzo");
+        }
+        $this->availabilityEndDate = $availabilityEndDate;
     }
 
     /**
@@ -94,26 +141,11 @@ final class Activity
     /**
      * @return string
      */
-    public function getTitle(): string
-    {
-        return $this->title;
-    }
-
-    /**
-     * @return string
-     */
     public function getDescription(): string
     {
         return $this->description;
     }
 
-    /**
-     * @return DatePeriod
-     */
-    public function getAvailabilityDateRange(): DatePeriod
-    {
-        return $this->availabilityDateRange;
-    }
 
     /**
      * @return float
