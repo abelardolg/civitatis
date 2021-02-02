@@ -22,7 +22,7 @@ final class Version20210202160642 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql("
             CREATE TABLE activity (
-                id INT NOT NULL PRIMARY KEY,
+                id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
                 title VARCHAR(64) NOT NULL DEFAULT 'Sin título',
                 description VARCHAR(100) NOT NULL DEFAULT 'Sin descripción',
                 availabilityStartDate DATETIME NOT NULL,
