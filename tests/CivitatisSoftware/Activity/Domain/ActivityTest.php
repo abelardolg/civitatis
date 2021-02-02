@@ -19,7 +19,7 @@ class ActivityTest extends TestCase
         $this->availabilityStartDate = new DateTimeImmutable('2021-02-03');
         $this->availabilityEndDate = new DateTimeImmutable('2021-02-03');
 
-        $this->activity = new Activity(1, $this->generateRandomString(Activity::MAX_TITLE_LENGTH), "description", $this->availabilityStartDate, $this->availabilityEndDate, 100.0, 4);
+        $this->activity = new Activity(1, $this->generateRandomString(), "description", $this->availabilityStartDate, $this->availabilityEndDate, 100.0, 4);
     }
 
     private function generateRandomString($length = Activity::MAX_TITLE_LENGTH)
