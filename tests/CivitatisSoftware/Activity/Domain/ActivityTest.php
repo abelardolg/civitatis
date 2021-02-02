@@ -5,8 +5,6 @@ namespace App\Tests\CivitatisSoftware\Activity\Domain;
 
 
 use App\CivitatisSoftware\Activity\Domain\Activity;
-use DateInterval;
-use DatePeriod;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
@@ -14,16 +12,15 @@ class ActivityTest extends TestCase
 {
     const MAX_LENGTH = 64;
     private $activity;
+    private $availabilityStartDate;
+    private $availabilityEndDate;
 
     public function setup(): void
     {
-        $inicio = new DateTimeImmutable('2021-02-03');
-        $intervalo = new DateInterval('P1D');
-        $fin = new DateTimeImmutable('2021-02-03');
+        $this->availabilityStartDate = new DateTimeImmutable('2021-02-03');
+        $this->availabilityEndDate = new DateTimeImmutable('2021-02-03');
 
-        $periodoactivity = new DatePeriod($inicio, $intervalo, $fin);
-
-        $this->activity = new Activity(1, $this->generateRandomString(activity::MAX_TITLE_LENGTH), "description", $periodoactivity, 100.0, 4);
+        $this->activity = new Activity(1, $this->generateRandomString(activity::MAX_TITLE_LENGTH), "description", $this->availabilityStartDate, $this->availabilityEndDate, 100.0, 4);
 
     }
 
@@ -41,31 +38,34 @@ class ActivityTest extends TestCase
     public function testSettingTitle()
     {
         $title = $this->generateRandomString();
-        $inicio = new DateTimeImmutable('2021-02-03');
-        $intervalo = new DateInterval('P1D');
-        $fin = new DateTimeImmutable('2021-02-03');
 
-        $activityAvailability = new DatePeriod($inicio, $intervalo, $fin);
+        $this->activity = new Activity(1, $title, "description", $this->availabilityStartDate, $this->availabilityEndDate, 100.0, 4);
 
-        $this->activity = new Activity(1, $title, "description", $activityAvailability, 100.0, 4);
         $this->assertSame(self::MAX_LENGTH, strlen($this->activity->getTitle()));
     }
 
-    public function testSettingActivityPeriod()
+    public function testSettingActivityStartDate()
     {
         $hoy = new DateTimeImmutable();
-        $this->assertTrue($hoy <= $this->activity->getAvailabilityDateRange()->getStartDate(), "La fecha de comienzo de la activity es igual a hoy o superior");
+        $this->assertTrue($hoy <= $this->activity->getAvailabilityStartDate(), "La fecha de comienzo de la actividad es igual a hoy o superior");
+    }
+
+    public function testIfAvailabilityEndDateIsGreaterThanAvailabilityStartDate()
+    {
+        $this->assertTrue($this->activity->getAvailabilityStartDate() <= $this->activity->getAvailabilityEndDate(), "La fecha de comienzo de la actividad es igual o menor a la fecha final de la actividad");
+    }
+
+    public function testIfAvailabilityEndDateIsGreaterThanToday()
+    {
+        $today = new DateTimeImmutable();
+        $this->assertTrue($today <= $this->activity->getAvailabilityEndDate(), "La fecha de final de la actividad es igual o mayor a la fecha de hoy");
     }
 
     public function testSettingNegativePricePerPax()
     {
         $price = 100.0;
 
-        $inicio = new DateTimeImmutable('2021-02-03');
-        $intervalo = new DateInterval('P1D');
-        $fin = new DateTimeImmutable('2021-02-03');
-        $periodoactivity = new DatePeriod($inicio, $intervalo, $fin);
-        $this->activity = new Activity(1, $this->generateRandomString(activity::MAX_TITLE_LENGTH), "description", $periodoactivity, $price, 4);
+        $this->activity = new Activity(1, $this->generateRandomString(activity::MAX_TITLE_LENGTH), "description", $this->availabilityStartDate, $this->availabilityEndDate, $price, 4);
 
         $this->assertGreaterThan(0, $this->activity->getPricePerPax());
     }
@@ -74,12 +74,7 @@ class ActivityTest extends TestCase
     {
         $popularity = Activity::MAX_POPULARITY;
 
-        $inicio = new DateTimeImmutable('2021-02-03');
-        $intervalo = new DateInterval('P1D');
-        $fin = new DateTimeImmutable('2021-02-03');
-        $periodoactivity = new DatePeriod($inicio, $intervalo, $fin);
-
-        $this->activity = new Activity(1, "activityTitle", "activityDescription", $periodoactivity, 100.0, $popularity);
+        $this->activity = new Activity(1, "activityTitle", "activityDescription", $this->availabilityStartDate, $this->availabilityEndDate, 100.0, $popularity);
 
         $this->assertLessThanOrEqual(Activity::MAX_POPULARITY, $this->activity->getPopularity());
     }
