@@ -68,7 +68,7 @@ final class Activity
      */
     private function setAvailabilityStartDate(DateTimeImmutable $availabilityStartDate): void
     {
-        if (isNull($availabilityStartDate)) {
+        if (is_null($availabilityStartDate)) {
             throw new InvalidArgumentException("La fecha de comienzo debe tener un valor");
         }
         $hoy = new DateTimeImmutable();
@@ -91,12 +91,12 @@ final class Activity
      */
     private function setAvailabilityEndDate(DateTimeImmutable $availabilityEndDate): void
     {
-        if (isNull($availabilityEndDate)) {
+        if (is_null($availabilityEndDate)) {
             throw new InvalidArgumentException("La fecha de final de la actividad debe tener un valor");
         }
         $hoy = new DateTimeImmutable();
         $availabilityStartDate = $this->getAvailabilityStartDate();
-        if (!isNull($availabilityStartDate) && ($availabilityEndDate < $availabilityStartDate)) {
+        if (!is_null($availabilityStartDate) && ($availabilityEndDate < $availabilityStartDate)) {
             throw new InvalidArgumentException("La fecha de final de la actividad no puede ser anterior a la de su comienzo");
         }
         $this->availabilityEndDate = $availabilityEndDate;
