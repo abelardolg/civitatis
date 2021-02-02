@@ -10,9 +10,9 @@ use PHPUnit\Framework\TestCase;
 
 class ActivityTest extends TestCase
 {
-    private $activity;
-    private $availabilityStartDate;
-    private $availabilityEndDate;
+    private Activity $activity;
+    private DateTimeImmutable $availabilityStartDate;
+    private DateTimeImmutable $availabilityEndDate;
 
     public function setup(): void
     {

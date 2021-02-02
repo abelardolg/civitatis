@@ -4,7 +4,6 @@ namespace App\CivitatisSoftware\Activity\Domain;
 
 use DateTimeImmutable;
 use InvalidArgumentException;
-use Symfony\Component\Uid\Uuid;
 
 final class Activity
 {

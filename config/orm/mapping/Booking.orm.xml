@@ -7,10 +7,13 @@
         <field name="price" type="float"/>
         <field name="bookDate" type="datetime"/>
         <field name="doneDate" type="datetime"/>
-        <field name="created_at" type="datetime"/>
-        <field name="updated_at" type="datetime"/>
+        <field name="createdAt" type="datetime"/>
+        <field name="updatedAt" type="datetime"/>
 
         <one-to-one field="activityID" target-entity="App\CivitatisSoftware\Activity\Domain\Activity">
+            <cascade>
+                <cascade-remove/>
+            </cascade>
             <join-column name="activity_id" referenced-column-name="id"/>
         </one-to-one>
     </entity>
