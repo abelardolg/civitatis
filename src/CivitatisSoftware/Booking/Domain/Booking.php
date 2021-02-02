@@ -7,6 +7,8 @@ use InvalidArgumentException;
 
 final class Booking
 {
+    private int $id;
+
     protected int $activityID;
     protected int $numPax;
     protected float $price;
@@ -14,7 +16,6 @@ final class Booking
     protected DateTimeImmutable $doneDate;
     protected DateTimeImmutable $createdAt;
     protected DateTimeImmutable $updatedAt;
-    private int $id;
 
     public function __construct(int $id, int $activityID, int $numPax, float $price, DateTimeImmutable $bookDate, DateTimeImmutable $doneDate)
     {
