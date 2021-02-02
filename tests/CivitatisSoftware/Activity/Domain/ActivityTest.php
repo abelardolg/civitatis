@@ -22,7 +22,7 @@ class ActivityTest extends TestCase
         $this->activity = new Activity(1, $this->generateRandomString(Activity::MAX_TITLE_LENGTH), "description", $this->availabilityStartDate, $this->availabilityEndDate, 100.0, 4);
     }
 
-    private function generateRandomString($length = self::MAX_LENGTH)
+    private function generateRandomString($length = Activity::MAX_TITLE_LENGTH)
     {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
