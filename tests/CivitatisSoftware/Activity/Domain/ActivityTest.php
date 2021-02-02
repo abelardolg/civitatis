@@ -10,7 +10,6 @@ use PHPUnit\Framework\TestCase;
 
 class ActivityTest extends TestCase
 {
-    const MAX_LENGTH = 64;
     private $activity;
     private $availabilityStartDate;
     private $availabilityEndDate;
@@ -20,8 +19,7 @@ class ActivityTest extends TestCase
         $this->availabilityStartDate = new DateTimeImmutable('2021-02-03');
         $this->availabilityEndDate = new DateTimeImmutable('2021-02-03');
 
-        $this->activity = new Activity(1, $this->generateRandomString(activity::MAX_TITLE_LENGTH), "description", $this->availabilityStartDate, $this->availabilityEndDate, 100.0, 4);
-
+        $this->activity = new Activity(1, $this->generateRandomString(Activity::MAX_TITLE_LENGTH), "description", $this->availabilityStartDate, $this->availabilityEndDate, 100.0, 4);
     }
 
     private function generateRandomString($length = self::MAX_LENGTH)
@@ -41,7 +39,7 @@ class ActivityTest extends TestCase
 
         $this->activity = new Activity(1, $title, "description", $this->availabilityStartDate, $this->availabilityEndDate, 100.0, 4);
 
-        $this->assertSame(self::MAX_LENGTH, strlen($this->activity->getTitle()));
+        $this->assertSame(Activity::MAX_TITLE_LENGTH, strlen($this->activity->getTitle()));
     }
 
     public function testSettingActivityStartDate()
@@ -65,7 +63,7 @@ class ActivityTest extends TestCase
     {
         $price = 100.0;
 
-        $this->activity = new Activity(1, $this->generateRandomString(activity::MAX_TITLE_LENGTH), "description", $this->availabilityStartDate, $this->availabilityEndDate, $price, 4);
+        $this->activity = new Activity(1, $this->generateRandomString(Activity::MAX_TITLE_LENGTH), "description", $this->availabilityStartDate, $this->availabilityEndDate, $price, 4);
 
         $this->assertGreaterThan(0, $this->activity->getPricePerPax());
     }
