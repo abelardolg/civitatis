@@ -14,5 +14,12 @@ doctrine:
                 is_bundle: false
                 type: xml
                 dir: '%kernel.project_dir%/config/orm/mapping'
-                prefix: 'App\Entity'
+                prefix: 'App\CivitatisSoftware\Activity\Domain'
+                alias: App
+
+            Booking:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/config/orm/mapping'
+                prefix: 'App\CivitatisSoftware\Booking\Domain'
                 alias: App
