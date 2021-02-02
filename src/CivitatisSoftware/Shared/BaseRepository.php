@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Tests\CivitatisSoftware\Activity\Domain;
+namespace App\CivitatisSoftware\Shared;
 
 
 use Doctrine\DBAL\Connection;

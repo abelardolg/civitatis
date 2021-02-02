@@ -4,7 +4,7 @@
 namespace App\CivitatisSoftware\Booking\Infrastructure;
 
 use App\CivitatisSoftware\Booking\Domain\Booking;
-use App\Tests\CivitatisSoftware\Activity\Domain\BaseRepository;
+use App\CivitatisSoftware\Shared\BaseRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 
