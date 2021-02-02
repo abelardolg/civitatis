@@ -4,7 +4,7 @@
 namespace App\CivitatisSoftware\Activity\Infrastructure;
 
 use App\CivitatisSoftware\Activity\Domain\Activity;
-use App\Tests\CivitatisSoftware\Activity\Domain\BaseRepository;
+use App\CivitatisSoftware\Shared\BaseRepository;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\OptimisticLockException;
