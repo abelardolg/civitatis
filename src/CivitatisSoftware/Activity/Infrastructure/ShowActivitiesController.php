@@ -57,7 +57,7 @@ class ShowActivitiesController extends AbstractController
         try {
             $date = new DateTime($dateStr);
             $activities = $this->showAllActivitiesUseCase->showAllActivitiesByDate($date, $numPax);
-            $statusCode = (empty($activities)) ? Response::HTTP_NO_CONTENT : Response::HTTP_OK;
+            $statusCode = Response::HTTP_NO_CONTENT;
         } catch (Exception $e) {
             $msg = "Hubo un error en el formato de los parámetros.";
             $statusCode = Response::HTTP_BAD_REQUEST;
