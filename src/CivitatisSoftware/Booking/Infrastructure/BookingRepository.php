@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\CivitatisSoftware\Booking\Infrastructure;
 
 use App\CivitatisSoftware\Booking\Domain\Booking;
@@ -16,7 +15,6 @@ class BookingRepository extends BaseRepository
     }
 
     /**
-     * @param Booking $booking
      * @throws ORMException
      * @throws OptimisticLockException
      */

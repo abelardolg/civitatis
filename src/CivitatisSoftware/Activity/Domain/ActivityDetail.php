@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\CivitatisSoftware\Activity\Domain;
 
 use DateTime;
@@ -24,52 +23,33 @@ final class ActivityDetail
         $this->relatedActivities = $relatedActivities;
     }
 
-    /**
-     * @return string
-     */
     public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * @return float
-     */
     public function getTotalPrice(): float
     {
         return $this->totalPrice;
     }
 
-    /**
-     * @return int
-     */
     public function getNumPax(): int
     {
         return $this->numPax;
     }
 
-    /**
-     * @return string
-     */
     public function getDescription(): string
     {
         return $this->description;
     }
 
-    /**
-     * @return DateTime
-     */
     public function getDate(): DateTime
     {
         return $this->date;
     }
 
-    /**
-     * @return array
-     */
     public function getRelatedActivities(): array
     {
         return $this->relatedActivities;
     }
-
 }

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\CivitatisSoftware\Activity\Domain;
 
 final class ActivityList
@@ -18,33 +17,21 @@ final class ActivityList
         $this->numPax = $numPax;
     }
 
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * @return float
-     */
     public function getTotalPrice(): float
     {
         return $this->totalPrice;
     }
 
-    /**
-     * @return int
-     */
     public function getNumPax(): int
     {
         return $this->numPax;

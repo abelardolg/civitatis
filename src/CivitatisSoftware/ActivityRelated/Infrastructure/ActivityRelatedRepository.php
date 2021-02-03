@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\CivitatisSoftware\ActivityRelated\Infrastructure;
 
 use App\CivitatisSoftware\ActivityRelated\Domain\ActivityRelated;
@@ -13,10 +12,6 @@ class ActivityRelatedRepository extends BaseRepository
         return ActivityRelated::class;
     }
 
-    /**
-     * @param int $activityID
-     * @return array
-     */
     public function findRelatedActivitiesWithThisActivityID(int $activityID): array
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
@@ -28,6 +23,5 @@ class ActivityRelatedRepository extends BaseRepository
             ->setParameter('activityID', $activityID)
             ->getQuery()
             ->getResult();
-
     }
 }

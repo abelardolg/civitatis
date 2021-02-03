@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\CivitatisSoftware\Activity\Application;
-
 
 use App\CivitatisSoftware\Activity\Domain\ActivityDetail;
 use App\CivitatisSoftware\Activity\Infrastructure\ActivityRepository;
@@ -12,9 +10,6 @@ use App\CivitatisSoftware\Shared\ComputeHelper;
 
 final class ShowDetailActivityUseCase
 {
-    /**
-     * @var ActivityRepository
-     */
     private ActivityRepository $activityRepository;
     private ActivityRelatedRepository $activityRelatedRepository;
 
@@ -24,11 +19,6 @@ final class ShowDetailActivityUseCase
         $this->activityRelatedRepository = $activityRelatedRepository;
     }
 
-    /**
-     * @param int $activityID
-     * @param int $numPax
-     * @return ActivityDetail|null
-     */
     public function getDetailActivity(int $activityID, int $numPax): ?ActivityDetail
     {
         $activity = $this->activityRepository->findDetailActivityByID($activityID);
@@ -56,6 +46,7 @@ final class ShowDetailActivityUseCase
                 $totalPrice, $numPax, $relatedActivitiesForThisActivity
             );
         }
+
         return null;
     }
 }

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\CivitatisSoftware\Shared;
-
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Connection;
@@ -15,15 +13,9 @@ use Doctrine\Persistence\ObjectRepository;
 
 abstract class BaseRepository extends ServiceEntityRepository
 {
-
-    /**
-     * @var Connection
-     */
     protected Connection $connection;
     protected ObjectRepository $objectRepository;
-    /**
-     * @var ManagerRegistry
-     */
+
     private ManagerRegistry $managerRegistry;
 
     public function __construct(ManagerRegistry $managerRegistry, Connection $connection)

@@ -13,20 +13,13 @@ final class ActivityRelated
         $this->idRelatedActivity = $idRelatedActivity;
     }
 
-    /**
-     * @return int
-     */
     public function getIdMainActivity(): int
     {
         return $this->idMainActivity;
     }
 
-    /**
-     * @return int
-     */
     public function getIdRelatedActivity(): int
     {
         return $this->idRelatedActivity;
     }
-
 }

@@ -11,9 +11,6 @@ use Doctrine\ORM\ORMException;
 
 class MakeBookingUseCase
 {
-    /**
-     * @var BookingRepository
-     */
     private BookingRepository $bookingRepository;
 
     public function __construct(BookingRepository $bookingRepository)
@@ -22,9 +19,6 @@ class MakeBookingUseCase
     }
 
     /**
-     * @param int $activityID
-     * @param int $numPax
-     * @param float $totalPrice
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -37,5 +31,4 @@ class MakeBookingUseCase
 
         $this->bookingRepository->save($booking);
     }
-
 }

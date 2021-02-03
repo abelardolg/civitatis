@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\CivitatisSoftware\Activity\Application;
-
 
 use App\CivitatisSoftware\Activity\Domain\Activity;
 use App\CivitatisSoftware\Activity\Domain\ActivityList;
@@ -20,8 +18,6 @@ final class ShowAllActivitiesUseCase
     }
 
     /**
-     * @param DateTime $date
-     * @param int $numPax
      * @return array|array[]
      */
     public function showAllActivitiesByDate(DateTime $date, int $numPax = 1): array
@@ -30,8 +26,8 @@ final class ShowAllActivitiesUseCase
 
         return array_map(function (Activity $activity) use ($numPax) {
             $totalPrice = ComputeHelper::computeTotalPrice($activity->getPricePerPax(), $numPax);
+
             return new ActivityList($activity->getId(), $activity->getTitle(), $totalPrice, $numPax);
         }, $activities);
     }
-
 }

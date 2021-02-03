@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\CivitatisSoftware\Activity\Infrastructure;
 
 use App\CivitatisSoftware\Activity\Domain\Activity;
@@ -16,10 +15,6 @@ class ActivityRepository extends BaseRepository
         return Activity::class;
     }
 
-    /**
-     * @param DateTime $activityDate
-     * @return array
-     */
     public function findActivitiesInThisDate(DateTime $activityDate): array
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
@@ -32,7 +27,6 @@ class ActivityRepository extends BaseRepository
             ->orderBy('a.popularity', 'DESC')
             ->getQuery()
             ->getResult();
-
     }
 
     public function findDetailActivityByID(int $activityID): Activity
@@ -41,7 +35,6 @@ class ActivityRepository extends BaseRepository
     }
 
     /**
-     * @param Activity $activity
      * @throws ORMException
      * @throws OptimisticLockException
      */
