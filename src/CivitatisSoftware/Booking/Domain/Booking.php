@@ -2,32 +2,39 @@
 
 namespace App\CivitatisSoftware\Booking\Domain;
 
-use DateTimeImmutable;
+use DateTime;
 use InvalidArgumentException;
 
 final class Booking
 {
-    private int $id;
+    protected int $id;
 
-    protected int $activityID;
+    protected int $activity_id;
     protected int $numPax;
     protected float $price;
-    protected DateTimeImmutable $bookDate;
-    protected DateTimeImmutable $doneDate;
-    protected DateTimeImmutable $createdAt;
-    protected DateTimeImmutable $updatedAt;
+    protected DateTime $bookDate;
+    protected DateTime $doneDate;
+    protected DateTime $createdAt;
+    protected DateTime $updatedAt;
 
-    public function __construct(int $id, int $activityID, int $numPax, float $price, DateTimeImmutable $bookDate, DateTimeImmutable $doneDate)
+    public function __construct(int $activityID, int $numPax, float $price, DateTime $bookDate, DateTime $doneDate)
     {
-        $this->id = $id;
-        $this->activityID = $activityID;
+        $this->activity_id = $activityID;
         $this->setNumPax($numPax);
         $this->setPrice($price);
         $this->setBookDate($bookDate);
         $this->setDoneDate($doneDate);
 
-        $this->createdAt = new DateTimeImmutable();
+        $this->createdAt = new DateTime();
         $this->markAsUpdated();
+    }
+
+    /**
+     * @return int
+     */
+    public function getActivityId(): int
+    {
+        return $this->activity_id;
     }
 
     /**
@@ -46,11 +53,11 @@ final class Booking
     }
 
     /**
-     * @param DateTimeImmutable $bookDate
+     * @param DateTime $bookDate
      */
-    private function setBookDate(DateTimeImmutable $bookDate): void
+    private function setBookDate(DateTime $bookDate): void
     {
-        $hoy = new DateTimeImmutable();
+        $hoy = new DateTime();
         if ($bookDate < $hoy) {
             throw new InvalidArgumentException("La fecha de la reserva no puede ser antes de la fecha de hoy");
         }
@@ -58,11 +65,11 @@ final class Booking
     }
 
     /**
-     * @param DateTimeImmutable $doneDate
+     * @param DateTime $doneDate
      */
-    private function setDoneDate(DateTimeImmutable $doneDate): void
+    private function setDoneDate(DateTime $doneDate): void
     {
-        $hoy = new DateTimeImmutable();
+        $hoy = new DateTime();
         if ($doneDate < $hoy) {
             throw new InvalidArgumentException("La fecha de finalización de la reserva no puede ser antes de la fecha de hoy");
         }
@@ -72,14 +79,14 @@ final class Booking
         $this->doneDate = $doneDate;
     }
 
-    public function getBookDate(): DateTimeImmutable
+    public function getBookDate(): DateTime
     {
         return $this->bookDate;
     }
 
     public function markAsUpdated(): void
     {
-        $this->updatedAt = new DateTimeImmutable();
+        $this->updatedAt = new DateTime();
     }
 
     /**
@@ -109,23 +116,23 @@ final class Booking
         return $this->price;
     }
 
-    public function getDoneDate(): DateTimeImmutable
+    public function getDoneDate(): DateTime
     {
         return $this->doneDate;
     }
 
     /**
-     * @return DateTimeImmutable
+     * @return DateTime
      */
-    public function getCreatedAt(): DateTimeImmutable
+    public function getCreatedAt(): DateTime
     {
         return $this->createdAt;
     }
 
     /**
-     * @return DateTimeImmutable
+     * @return DateTime
      */
-    public function getUpdatedAt(): DateTimeImmutable
+    public function getUpdatedAt(): DateTime
     {
         return $this->updatedAt;
     }

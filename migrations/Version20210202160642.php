@@ -29,8 +29,8 @@ final class Version20210202160642 extends AbstractMigration
                 availabilityEndDate DATETIME NOT NULL,
                 pricePerPax FLOAT NOT NULL DEFAULT 0.0,
                 popularity INT NOT NULL DEFAULT 0,
-                created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                updatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
                 CONSTRAINT U_title UNIQUE KEY(title)
             )
         ");

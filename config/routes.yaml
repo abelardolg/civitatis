@@ -1,3 +1,19 @@
-index:
-    path: /showActivitiesByDate
+showInitialForm:
+    path: /
     controller: App\CivitatisSoftware\Activity\Infrastructure\ShowActivitiesController
+    methods: GET
+
+showActivities:
+    path: /showActivitiesByDate
+    controller: App\CivitatisSoftware\Activity\Infrastructure\ShowActivitiesController::returnActivitiesForThisDate
+    methods: POST
+
+makeABooking:
+    path: /makeABooking
+    controller: App\CivitatisSoftware\Booking\Infrastructure\MakeBookingController
+    methods: GET
+
+showDetail:
+    path: /showDetail
+    controller: App\CivitatisSoftware\Activity\Infrastructure\ShowDetailActivityController::returnDetailActivity
+    methods: GET

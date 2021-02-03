@@ -22,6 +22,6 @@ class BookingRepository extends BaseRepository
      */
     public function save(Booking $booking): void
     {
-        $this->save($booking);
+        $this->saveEntity($booking);
     }
 }
