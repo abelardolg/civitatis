@@ -22,7 +22,7 @@ class MakeBookingUseCase
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function makeABooking(int $activityID, int $numPax, float $totalPrice)
+    public function makeABooking(int $activityID, int $numPax, float $totalPrice): void
     {
         $today = (new DateTime())->add(new DateInterval('P01D'));
         $doneDate = (new DateTime())->add(new DateInterval('P06D'));

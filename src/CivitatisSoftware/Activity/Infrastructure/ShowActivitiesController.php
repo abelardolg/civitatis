@@ -14,6 +14,9 @@ class ShowActivitiesController extends AbstractController
 {
     private ShowAllActivitiesUseCase $showAllActivitiesUseCase;
 
+    /**
+     * ShowActivitiesController constructor.
+     */
     public function __construct(ShowAllActivitiesUseCase $showAllActivitiesUseCase)
     {
         $this->showAllActivitiesUseCase = $showAllActivitiesUseCase;

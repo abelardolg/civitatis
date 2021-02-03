@@ -18,6 +18,9 @@ abstract class BaseRepository extends ServiceEntityRepository
 
     private ManagerRegistry $managerRegistry;
 
+    /**
+     * BaseRepository constructor.
+     */
     public function __construct(ManagerRegistry $managerRegistry, Connection $connection)
     {
         $this->managerRegistry = $managerRegistry;

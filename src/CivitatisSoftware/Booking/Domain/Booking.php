@@ -87,7 +87,7 @@ final class Booking
         return $this->numPax;
     }
 
-    public function setNumPax(int $numPax): void
+    private function setNumPax(int $numPax): void
     {
         if ($numPax < 1) {
             throw new InvalidArgumentException('La reserva ha de tener al menos 1 persona.');

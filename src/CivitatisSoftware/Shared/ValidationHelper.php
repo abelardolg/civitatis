@@ -34,7 +34,6 @@ final class ValidationHelper
      * @param $activityID
      * @param $numPax
      * @param $totalPrice
-     * @return bool
      */
     public static function areValidMakeABookingParameters(int $activityID, int $numPax, float $totalPrice): bool
     {

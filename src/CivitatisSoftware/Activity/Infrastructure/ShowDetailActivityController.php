@@ -12,6 +12,9 @@ class ShowDetailActivityController extends AbstractController
 {
     private ShowDetailActivityUseCase $showDetailActivityUseCase;
 
+    /**
+     * ShowDetailActivityController constructor.
+     */
     public function __construct(ShowDetailActivityUseCase $showDetailActivityUseCase)
     {
         $this->showDetailActivityUseCase = $showDetailActivityUseCase;
