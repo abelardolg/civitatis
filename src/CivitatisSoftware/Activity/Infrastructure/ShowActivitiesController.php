@@ -27,11 +27,13 @@ class ShowActivitiesController extends AbstractController
 
     public function __invoke(Request $request): Response
     {
-        return $this->render('activities/list_activities.html.twig', [
-            'activities' => [],
-            "msg" => "",
-            "statusCode" => -1
-        ]);
+        return new Response(
+            $this->renderView('activities/list_activities.html.twig', [
+                    'activities' => [],
+                    "msg" => "",
+                    "statusCode" => -1
+                ]
+            ), Response::HTTP_OK);
     }
 
     public function returnActivitiesForThisDate(Request $request): Response
@@ -42,11 +44,14 @@ class ShowActivitiesController extends AbstractController
         $numPax = $request->get("quantity");
 
         if (!ValidationHelper::areValidShowActivitiesParameters($dateStr, intVal($numPax))) {
-            return $this->render('activities/list_activities.html.twig', [
-                "activities" => [],
-                "msg" => "Por favor, proporcione los parámetros correctos.",
-                "statusCode" => Response::HTTP_BAD_REQUEST
-            ]);
+            return new Response(
+                $this->renderView('activities/list_activities.html.twig', [
+                        "activities" => [],
+                        "msg" => "Por favor, proporcione los parámetros correctos.",
+                        "statusCode" => Response::HTTP_BAD_REQUEST
+                    ]
+                ),
+                Response::HTTP_BAD_REQUEST);
         }
 
         try {
@@ -59,11 +64,14 @@ class ShowActivitiesController extends AbstractController
             $activities = [];
         }
 
-        return $this->render('activities/list_activities.html.twig', [
-            "activities" => $activities,
-            "msg" => $msg,
-            "statusCode" => $statusCode
-        ]);
+        return new Response(
+            $this->renderView('activities/list_activities.html.twig', [
+                    "activities" => $activities,
+                    "msg" => $msg,
+                    "statusCode" => $statusCode
+                ]
+            ), $statusCode);
+
 
     }
 }

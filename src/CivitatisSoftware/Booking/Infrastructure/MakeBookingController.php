@@ -29,11 +29,13 @@ final class MakeBookingController extends AbstractController
         $totalPrice = $request->get("totalPrice");
 
         if (!ValidationHelper::areValidMakeABookingParameters($activityID, $numPax, $totalPrice)) {
-            return $this->render('activities/list_activities.html.twig', [
-                "activities" => [],
-                "msg" => "Por favor, proporcione los parámetros correctos.",
-                "statusCode" => Response::HTTP_BAD_REQUEST
-            ]);
+            return new Response(
+                $this->renderView('activities/list_activities.html.twig', [
+                        "activities" => [],
+                        "msg" => "Por favor, proporcione los parámetros correctos.",
+                        "statusCode" => Response::HTTP_BAD_REQUEST
+                    ]
+                ), Response::HTTP_BAD_REQUEST);
         }
 
         try {
@@ -45,11 +47,13 @@ final class MakeBookingController extends AbstractController
             $statusCode = Response::HTTP_INTERNAL_SERVER_ERROR;
         }
 
-        return $this->render('activities/list_activities.html.twig', [
-            'activities' => [],
-            "msg" => $msg,
-            "statusCode" => $statusCode
-        ]);
+        return new Response(
+            $this->renderView('activities/list_activities.html.twig', [
+                    'activities' => [],
+                    "msg" => $msg,
+                    "statusCode" => $statusCode
+                ]
+            ), $statusCode);
 
     }
 }

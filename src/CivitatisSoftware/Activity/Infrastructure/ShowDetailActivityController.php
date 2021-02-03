@@ -28,30 +28,35 @@ class ShowDetailActivityController extends AbstractController
         $numPax = $request->get("numPax");
 
         if (!ValidationHelper::areValidMakeDetailActivityParameters($activityID, $numPax)) {
-            return $this->render('activities/list_activities.html.twig', [
-                "activities" => [],
-                "msg" => "Por favor, proporcione los parámetros correctos.",
-                "statusCode" => Response::HTTP_BAD_REQUEST
-            ]);
+            return new Response(
+                $this->renderView('activities/list_activities.html.twig', [
+                        "activities" => [],
+                        "msg" => "Por favor, proporcione los parámetros correctos.",
+                        "statusCode" => Response::HTTP_BAD_REQUEST
+                    ]
+                ), Response::HTTP_BAD_REQUEST);
         }
 
         $activity = $this->showDetailActivityUseCase->getDetailActivity($activityID, $numPax);
 
         if (!$activity) {
 
-            return $this->render('activities/show_detail_activity.html.twig', [
-                "activity" => $activity,
-                "relatedActivities" => $relatedActivities,
-                "msg" => "Lo sentimos, pero la actividad solicitada no se encuentra disponible.",
-                "statusCode" => Response::HTTP_INTERNAL_SERVER_ERROR
-            ]);
+            return new Response(
+                $this->renderView('activities/show_detail_activity.html.twig', [
+                        "activity" => $activity,
+                        "msg" => "Lo sentimos, pero la actividad solicitada no se encuentra disponible.",
+                        "statusCode" => Response::HTTP_INTERNAL_SERVER_ERROR
+                    ]
+                ), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
-        return $this->render('activities/show_detail_activity.html.twig', [
-            "activity" => $activity,
-            "msg" => "",
-            "statusCode" => Response::HTTP_OK
-        ]);
+        return new Response(
+            $this->renderView('activities/show_detail_activity.html.twig', [
+                    "activity" => $activity,
+                    "msg" => "",
+                    "statusCode" => Response::HTTP_OK
+                ]
+            ), Response::HTTP_OK);
 
     }
 
