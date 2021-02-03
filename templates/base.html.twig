@@ -19,15 +19,11 @@
 </head>
 <body>
 <!-- Main navbar -->
-{{ include ('./partials/mainNavbar.html') }}
+    {{ include ('./partials/mainNavbar.html') }}
 <!-- /main navbar -->
+
 <!-- Page content -->
 <div class="page-content">
-
-    <!-- Main sidebar -->
-    {# {{  include('mainSidebar.html') }} #}
-    <!-- /main sidebar -->
-
 
     <!-- Main content -->
     <div class="content-wrapper">
@@ -47,6 +43,7 @@
 
 </div>
 <!-- /page content -->
+
 {% block javascripts %}
     <!-- Core JS files -->
     <script src="{{ asset('global_assets/js/main/jquery.min.js') }}"></script>
