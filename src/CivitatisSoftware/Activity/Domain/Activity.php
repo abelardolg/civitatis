@@ -93,7 +93,6 @@ final class Activity
         if (is_null($availabilityEndDate)) {
             throw new InvalidArgumentException("La fecha de final de la actividad debe tener un valor");
         }
-        $hoy = new DateTime();
         $availabilityStartDate = $this->getAvailabilityStartDate();
         if (!is_null($availabilityStartDate) && ($availabilityEndDate < $availabilityStartDate)) {
             throw new InvalidArgumentException("La fecha de final de la actividad no puede ser anterior a la de su comienzo");

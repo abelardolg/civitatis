@@ -1,8 +1,9 @@
 <?php
 
-namespace Tests\CivitatisSoftware;
+namespace App\Tests\CivitatisSoftware\Booking\Domain;
 
 use App\CivitatisSoftware\Booking\Domain\Booking;
+use DateTime;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
@@ -10,14 +11,14 @@ use PHPUnit\Framework\TestCase;
 class BookingTest extends TestCase
 {
     const MAX_LENGTH = 64;
-    private $booking;
+    private Booking $booking;
 
     public function setup(): void
     {
-        $tomorrow = new DateTimeImmutable('2021-02-03');
-        $pastTomorrow = new DateTimeImmutable('2021-02-04');
+        $tomorrow = new DateTime('2021-02-06');
+        $pastTomorrow = new DateTime('2021-02-07');
 
-        $this->booking = new Booking(1, 1, 1, 200.0, $tomorrow, $pastTomorrow);
+        $this->booking = new Booking(1, 1, 200.0, $tomorrow, $pastTomorrow);
     }
 
     public function testBookDateBeforeADate()

@@ -5,24 +5,25 @@ namespace App\Tests\CivitatisSoftware\Activity\Domain;
 
 
 use App\CivitatisSoftware\Activity\Domain\Activity;
+use DateTime;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
 class ActivityTest extends TestCase
 {
     private Activity $activity;
-    private DateTimeImmutable $availabilityStartDate;
-    private DateTimeImmutable $availabilityEndDate;
+    private DateTime $availabilityStartDate;
+    private DateTime $availabilityEndDate;
 
     public function setup(): void
     {
-        $this->availabilityStartDate = new DateTimeImmutable('2021-02-03');
-        $this->availabilityEndDate = new DateTimeImmutable('2021-02-03');
+        $this->availabilityStartDate = new DateTime('2021-02-05');
+        $this->availabilityEndDate = new DateTime('2021-02-07');
 
         $this->activity = new Activity(1, $this->generateRandomString(), "description", $this->availabilityStartDate, $this->availabilityEndDate, 100.0, 4);
     }
 
-    private function generateRandomString($length = Activity::MAX_TITLE_LENGTH)
+    private function generateRandomString($length = Activity::MAX_TITLE_LENGTH): string
     {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
