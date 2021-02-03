@@ -20,6 +20,7 @@
 ## Docker en la aplicación
 
 * ### En la carpeta ```docker``` se encuentran los ficheros de configuración de los dos contenedores (PHP y NGINX)
+* ### En la carpeta ```sql``` se encuentra un fichero .csv con datos de muestra para su importación.
 
 ## Migraciones para MYSQL
 
