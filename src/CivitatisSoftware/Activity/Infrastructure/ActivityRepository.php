@@ -5,8 +5,7 @@ namespace App\CivitatisSoftware\Activity\Infrastructure;
 
 use App\CivitatisSoftware\Activity\Domain\Activity;
 use App\CivitatisSoftware\Shared\BaseRepository;
-use DateTimeImmutable;
-use Doctrine\Common\Collections\Criteria;
+use DateTime;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 
@@ -17,17 +16,28 @@ class ActivityRepository extends BaseRepository
         return Activity::class;
     }
 
-    public static function createFindActivitiesInThisDateCriteria(DateTimeImmutable $activityDate): Criteria
+    /**
+     * @param DateTime $activityDate
+     * @return array
+     */
+    public function findActivitiesInThisDate(DateTime $activityDate): array
     {
-        return Criteria::create()
-            ->andWhere(Criteria::expr()->gte('availabilityStartDate', $activityDate))
-            ->andWhere(Criteria::expr()->lte('availabilityEndDate', $activityDate))
-            ->orderBy(['popularity' => 'DESC']);
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb->select('a');
+
+        return $qb->from('App:Activity', 'a')
+            ->where(':activityDate between a.availabilityStartDate and a.availabilityEndDate')
+            ->setParameter('activityDate', $activityDate)
+            ->orderBy('a.popularity', 'DESC')
+            ->getQuery()
+            ->getResult();
+
     }
 
-    public function findActivitiesInThisDate(DateTimeImmutable $activityDate): Criteria
+    public function findDetailActivityByID(int $activityID): Activity
     {
-        return ActivityRepository::createFindActivitiesInThisDateCriteria($activityDate);
+        return $this->objectRepository->find($activityID);
     }
 
     /**
@@ -37,6 +47,6 @@ class ActivityRepository extends BaseRepository
      */
     public function save(Activity $activity): void
     {
-        $this->save($activity);
+        $this->saveEntity($activity);
     }
 }

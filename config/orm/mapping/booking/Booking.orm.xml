@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="App\CivitatisSoftware\Booking\Domain\Booking" table="booking">
+        <id name="id" type="integer">
+            <generator strategy="AUTO"/>
+        </id>
+
+        <field name="activity_id" type="integer"/>
+        <field name="numPax" type="integer"/>
+        <field name="price" type="float"/>
+        <field name="bookDate" type="datetime"/>
+        <field name="doneDate" type="datetime"/>
+        <field name="createdAt" type="datetime"/>
+        <field name="updatedAt" type="datetime"/>
+
+        <lifecycle-callbacks>
+            <lifecycle-callback type="preUpdate" method="markAsUpdated"/>
+        </lifecycle-callbacks>
+
+    </entity>
+</doctrine-mapping>

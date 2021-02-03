@@ -4,6 +4,7 @@
 namespace App\CivitatisSoftware\Shared;
 
 
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\OptimisticLockException;
@@ -12,7 +13,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectRepository;
 
-abstract class BaseRepository
+abstract class BaseRepository extends ServiceEntityRepository
 {
 
     /**
@@ -29,7 +30,7 @@ abstract class BaseRepository
     {
         $this->managerRegistry = $managerRegistry;
         $this->connection = $connection;
-        $this->objectRepository = $this->getEntityManager()->getRepository($this->entityClass());
+        $this->objectRepository = $this->getEntityManager()->getRepository('App\CivitatisSoftware\Activity\Domain\Activity');
     }
 
     /**

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+
+    <title>{% block title %}Civitatis | Bienvenida{% endblock %}</title>
+
+    {% block stylesheets %}
+        <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet"
+              type="text/css">
+        <link href="{{ asset('global_assets/css/icomoon/styles.min.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset('assets/css/bootstrap_limitless.min.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset('assets/css/layout.min.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset('assets/css/components.min.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset('assets/css/colors.min.css') }}" rel="stylesheet" type="text/css">
+    {% endblock %}
+
+</head>
+<body>
+<!-- Main navbar -->
+{{ include ('./partials/mainNavbar.html') }}
+<!-- /main navbar -->
+<!-- Page content -->
+<div class="page-content">
+
+    <!-- Main sidebar -->
+    {# {{  include('mainSidebar.html') }} #}
+    <!-- /main sidebar -->
+
+
+    <!-- Main content -->
+    <div class="content-wrapper">
+
+        <!-- Content area -->
+        {% block body %}{% endblock %}
+        <!-- /content area -->
+
+        <!-- Footer -->
+        {% block footer %}
+            {{ include('./partials/footer.html') }}
+        {% endblock %}
+        <!-- /footer -->
+
+    </div>
+    <!-- /main content -->
+
+</div>
+<!-- /page content -->
+{% block javascripts %}
+    <!-- Core JS files -->
+    <script src="{{ asset('global_assets/js/main/jquery.min.js') }}"></script>
+    <script src="{{ asset('global_assets/js/main/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('global_assets/js/plugins/loaders/blockui.min.js') }}"></script>
+
+    <script src="{{ asset('global_assets/js/plugins/extensions/jquery_ui/interactions.min.js') }}"></script>
+    <script src="{{ asset('global_assets/js/plugins/extensions/jquery_ui/widgets.min.js') }}"></script>
+    <script src="{{ asset('global_assets/js/plugins/extensions/jquery_ui/effects.min.js') }}"></script>
+    <script src="{{ asset('global_assets/js/plugins/extensions/mousewheel.min.js') }}"></script>
+    <script src="{{ asset('global_assets/js/plugins/extensions/jquery_ui/globalize/globalize.js') }}"></script>
+
+    <script src="{{ asset('global_assets/js/plugins/media/fancybox.min.js') }}"></script>
+    <script src="{{ asset('global_assets/js/plugins/forms/styling/uniform.min.js') }}"></script>
+
+    <script src="{{ asset('assets/js/app.js') }}"></script>
+    <script src="{{ asset('global_assets/js/demo_pages/jqueryui_forms.js') }}"></script>
+    <script src="{{ asset('global_assets/js/demo_pages/ecommerce_product_list.js') }}"></script>
+    <!-- /core JS files -->
+{% endblock %}
+</body>
+</html>

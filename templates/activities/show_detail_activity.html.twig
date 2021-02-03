@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="content pt-0">
+
+        {% if activity %}
+
+            <div class="mt-5 col-xl-3 col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-img-actions">
+                            <a href="https://elpais.com/elpais/imagenes/2019/05/30/estilo/1559228208_492552_1559228438_noticia_grande.jpg"
+                               data-popup="lightbox" width="96" height="5%">
+                                <img src="https://elpais.com/elpais/imagenes/2019/05/30/estilo/1559228208_492552_1559228438_noticia_grande.jpg"
+                                     class="card-img" width="96" height="5%" alt="">
+                                <span class="card-img-actions-overlay card-img">
+                                <i class="icon-plus3 icon-2x"></i>
+                            </span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="card-body text-center pt-2">
+                        <div class="mb-2">
+                            <h6 class="font-weight-semibold mb-0">
+                                <a href="#" class="text-default">{{ activity.title }}</a>
+                            </h6>
+
+                            <a href="#" class="text-muted">{{ activity.description }}</a>
+                        </div>
+
+                        <h3 class="mb-0 font-weight-semibold">{{ activity.totalPrice | number_format(2, '.', ',') |  currency_symbol }}
+                            €</h3>
+
+                        <div class="text-muted mb-3">{{ activity.numPax }} <i class="icon-users"></i></div>
+                        <div class="text-muted mb-3"><i class="icon-calendar22"></i> {{ activity.date | date("d/m/Y") }}
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="mt-5 col-xl-3 col-sm-6">
+                {% if activity.relatedActivities | length > 0 %}
+                    También le podrá interesar
+                    <hr/>
+                    <div class="row">
+                        {% for relatedActivity in activity.relatedActivities %}
+                            <div class="col-sm-6 col-xl-4">
+                                <div class="card-body">
+                                    <div class="card-img-actions">
+                                        <a href="https://elpais.com/elpais/imagenes/2019/05/30/estilo/1559228208_492552_1559228438_noticia_grande.jpg"
+                                           data-popup="lightbox" width="200%" height="200%">
+                                            <img src="https://elpais.com/elpais/imagenes/2019/05/30/estilo/1559228208_492552_1559228438_noticia_grande.jpg"
+                                                 class="card-img" width="200%" height="200%" alt="">
+                                            <span class="card-img-actions-overlay card-img">
+                                        <i class="icon-plus3 icon-2x"></i>
+                                    </span>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div class="card-body text-center pt-2">
+                                    <div class="mb-2">
+                                        <h6 class="font-weight-semibold mb-0">
+                                            <a href="#" class="text-default">{{ relatedActivity.title }}</a>
+                                        </h6>
+
+                                        <a href="#" class="text-muted">{{ relatedActivity.description }}</a>
+                                    </div>
+
+                                    <h3 class="mb-0 font-weight-semibold">{{ relatedActivity.totalPrice | number_format(2, '.', ',') |  currency_symbol }}
+                                        €</h3>
+
+                                    <div class="text-muted mb-3">{{ relatedActivity.numPax }} <i class="icon-users"></i>
+                                    </div>
+                                    <div class="text-muted mb-3"><i
+                                                class="icon-calendar22"></i> {{ relatedActivity.date | date("d/m/Y") }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        {% else %}
+            <div class="mt-5 alert alert-danger border-0 alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+                <span class="font-weight-semibold">Error</span> {{ msg }}
+            </div>
+        {% endif %}
+
+        <div class="mt-5 col-xl-3 col-sm-6">
+            <a href="{{ path('showInitialForm') }}" class="btn mb-5 btn-outline-primary"> <i class="icon-backward"></i>
+                Regresar </a>
+        </div>
+    </div>
+
+
+{% endblock %}

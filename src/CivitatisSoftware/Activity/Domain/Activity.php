@@ -2,7 +2,7 @@
 
 namespace App\CivitatisSoftware\Activity\Domain;
 
-use DateTimeImmutable;
+use DateTime;
 use InvalidArgumentException;
 
 final class Activity
@@ -13,15 +13,15 @@ final class Activity
     private int $id;
     protected string $title;
     protected string $description;
-    protected DateTimeImmutable $availabilityStartDate;
-    protected DateTimeImmutable $availabilityEndDate;
+    protected Datetime $availabilityStartDate;
+    protected Datetime $availabilityEndDate;
     protected float $pricePerPax;
     protected int $popularity;
-    protected DateTimeImmutable $createdAt;
-    protected DateTimeImmutable $updatedAt;
+    protected Datetime $createdAt;
+    protected Datetime $updatedAt;
 
-    public function __construct(int $id, string $title, string $description, DateTimeImmutable $availabilityStartDate,
-                                DateTimeImmutable $availabilityEndDate, float $pricePerPax, int $popularity)
+    public function __construct(int $id, string $title, string $description, DateTime $availabilityStartDate,
+                                DateTime $availabilityEndDate, float $pricePerPax, int $popularity)
     {
         $this->id = $id;
         $this->setTitle($title);
@@ -30,7 +30,7 @@ final class Activity
         $this->setAvailabilityEndDate($availabilityEndDate);
         $this->setPricePerPax(floatval($pricePerPax));
         $this->setPopularity($popularity);
-        $this->createdAt = new DateTimeImmutable();
+        $this->createdAt = new DateTime();
         $this->markAsUpdated();
     }
 
@@ -54,23 +54,23 @@ final class Activity
     }
 
     /**
-     * @return DateTimeImmutable
+     * @return DateTime
      */
-    public function getAvailabilityStartDate(): DateTimeImmutable
+    public function getAvailabilityStartDate(): DateTime
     {
         return $this->availabilityStartDate;
     }
 
 
     /**
-     * @param DateTimeImmutable $availabilityStartDate
+     * @param DateTime $availabilityStartDate
      */
-    private function setAvailabilityStartDate(DateTimeImmutable $availabilityStartDate): void
+    private function setAvailabilityStartDate(DateTime $availabilityStartDate): void
     {
         if (is_null($availabilityStartDate)) {
             throw new InvalidArgumentException("La fecha de comienzo debe tener un valor");
         }
-        $hoy = new DateTimeImmutable();
+        $hoy = new DateTime();
         if ($availabilityStartDate < $hoy) {
             throw new InvalidArgumentException("La fecha de comienzo de la actividad no puede ser anterior a hoy");
         }
@@ -78,22 +78,22 @@ final class Activity
     }
 
     /**
-     * @return DateTimeImmutable
+     * @return DateTime
      */
-    public function getAvailabilityEndDate(): DateTimeImmutable
+    public function getAvailabilityEndDate(): DateTime
     {
         return $this->availabilityEndDate;
     }
 
     /**
-     * @param DateTimeImmutable $availabilityEndDate
+     * @param DateTime $availabilityEndDate
      */
-    private function setAvailabilityEndDate(DateTimeImmutable $availabilityEndDate): void
+    private function setAvailabilityEndDate(DateTime $availabilityEndDate): void
     {
         if (is_null($availabilityEndDate)) {
             throw new InvalidArgumentException("La fecha de final de la actividad debe tener un valor");
         }
-        $hoy = new DateTimeImmutable();
+        $hoy = new DateTime();
         $availabilityStartDate = $this->getAvailabilityStartDate();
         if (!is_null($availabilityStartDate) && ($availabilityEndDate < $availabilityStartDate)) {
             throw new InvalidArgumentException("La fecha de final de la actividad no puede ser anterior a la de su comienzo");
@@ -129,7 +129,7 @@ final class Activity
 
     public function markAsUpdated(): void
     {
-        $this->updatedAt = new DateTimeImmutable();
+        $this->updatedAt = new DateTime();
     }
 
     public function getId(): int
@@ -163,20 +163,19 @@ final class Activity
     }
 
     /**
-     * @return DateTimeImmutable
+     * @return DateTime
      */
-    public function getCreatedAt(): DateTimeImmutable
+    public function getCreatedAt(): DateTime
     {
         return $this->createdAt;
     }
 
     /**
-     * @return DateTimeImmutable
+     * @return DateTime
      */
-    public function getUpdatedAt(): DateTimeImmutable
+    public function getUpdatedAt(): DateTime
     {
         return $this->updatedAt;
     }
-
 
 }

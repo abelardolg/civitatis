@@ -4,8 +4,13 @@
 namespace App\CivitatisSoftware\Activity\Infrastructure;
 
 use App\CivitatisSoftware\Activity\Application\ShowAllActivitiesUseCase;
+use App\CivitatisSoftware\ActivityRelated\Application\ShowAllRelatedActivitiesUseCase;
+use App\CivitatisSoftware\Shared\ValidationHelper;
+use DateTime;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class ShowActivitiesController extends AbstractController
 {
@@ -20,9 +25,45 @@ class ShowActivitiesController extends AbstractController
         $this->showAllActivitiesUseCase = $showAllActivitiesUseCase;
     }
 
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): Response
     {
-        var_dump($request);
+        return $this->render('activities/list_activities.html.twig', [
+            'activities' => [],
+            "msg" => "",
+            "statusCode" => -1
+        ]);
     }
 
+    public function returnActivitiesForThisDate(Request $request): Response
+    {
+        $msg = "";
+
+        $dateStr = $request->get("date");
+        $numPax = $request->get("quantity");
+
+        if (!ValidationHelper::areValidShowActivitiesParameters($dateStr, intVal($numPax))) {
+            return $this->render('activities/list_activities.html.twig', [
+                "activities" => [],
+                "msg" => "Por favor, proporcione los parámetros correctos.",
+                "statusCode" => Response::HTTP_BAD_REQUEST
+            ]);
+        }
+
+        try {
+            $date = new DateTime($dateStr);
+            $activities = $this->showAllActivitiesUseCase->showAllActivitiesByDate($date, $numPax);
+            $statusCode = (empty($activities)) ? Response::HTTP_NO_CONTENT : Response::HTTP_OK;
+        } catch (Exception $e) {
+            $msg = "Hubo un error en el formato de los parámetros.";
+            $statusCode = Response::HTTP_BAD_REQUEST;
+            $activities = [];
+        }
+
+        return $this->render('activities/list_activities.html.twig', [
+            "activities" => $activities,
+            "msg" => $msg,
+            "statusCode" => $statusCode
+        ]);
+
+    }
 }
