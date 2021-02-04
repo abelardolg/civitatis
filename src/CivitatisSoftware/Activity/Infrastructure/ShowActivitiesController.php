@@ -35,12 +35,14 @@ class ShowActivitiesController extends AbstractController
 
     public function returnActivitiesForThisDate(Request $request): Response
     {
+
         $msg = '';
 
         $dateStr = $request->get('date');
         $numPax = $request->get('quantity');
 
         if (!ValidationHelper::areValidShowActivitiesParameters($dateStr, intval($numPax))) {
+
             return new Response(
                 $this->renderView('activities/list_activities.html.twig', [
                         'activities' => [],
@@ -54,7 +56,14 @@ class ShowActivitiesController extends AbstractController
         try {
             $date = new DateTime($dateStr);
             $activities = $this->showAllActivitiesUseCase->showAllActivitiesByDate($date, $numPax);
-            $statusCode = Response::HTTP_NO_CONTENT;
+            $statusCode = empty($activities) ? Response::HTTP_NO_CONTENT : Response::HTTP_OK;
+            return new Response(
+                $this->renderView('activities/list_activities.html.twig', [
+                        'activities' => $activities,
+                        'msg' => $msg,
+                        'statusCode' => $statusCode,
+                    ]
+                ), Response::HTTP_OK);
         } catch (Exception $e) {
             $msg = 'Hubo un error en el formato de los parámetros.';
             $statusCode = Response::HTTP_BAD_REQUEST;
