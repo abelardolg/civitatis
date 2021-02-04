@@ -31,6 +31,7 @@ final class MakeBookingController extends AbstractController
                         'activities' => [],
                         'msg' => 'Por favor, proporcione los parámetros correctos.',
                         'statusCode' => Response::HTTP_BAD_REQUEST,
+                        'type' => "danger"
                     ]
                 ), Response::HTTP_BAD_REQUEST);
         }
@@ -39,9 +40,11 @@ final class MakeBookingController extends AbstractController
             $this->makeBookingUseCase->makeABooking($activityID, $numPax, $totalPrice);
             $msg = 'La reserva se ha hecho satisfactoriamente. ¡Disfrute de su actividad y gracias por confiar en Civitatis!';
             $statusCode = Response::HTTP_OK;
+            $type = "success";
         } catch (OptimisticLockException | ORMException $e) {
             $msg = 'Hubo un problema en el servidor. Por favor, contacte con el administrador';
             $statusCode = Response::HTTP_INTERNAL_SERVER_ERROR;
+            $type = "danger";
         }
 
         return new Response(
@@ -49,6 +52,7 @@ final class MakeBookingController extends AbstractController
                     'activities' => [],
                     'msg' => $msg,
                     'statusCode' => $statusCode,
+                    'type' => $type
                 ]
             ), $statusCode);
     }

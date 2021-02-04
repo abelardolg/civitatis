@@ -29,6 +29,7 @@ class ShowActivitiesController extends AbstractController
                     'activities' => [],
                     'msg' => '',
                     'statusCode' => -1,
+                    'type' => ''
                 ]
             ), Response::HTTP_OK);
     }
@@ -48,6 +49,7 @@ class ShowActivitiesController extends AbstractController
                         'activities' => [],
                         'msg' => 'Por favor, proporcione los parámetros correctos.',
                         'statusCode' => Response::HTTP_BAD_REQUEST,
+                        'type' => "danger"
                     ]
                 ),
                 Response::HTTP_BAD_REQUEST);
@@ -57,17 +59,23 @@ class ShowActivitiesController extends AbstractController
             $date = new DateTime($dateStr);
             $activities = $this->showAllActivitiesUseCase->showAllActivitiesByDate($date, $numPax);
             $statusCode = empty($activities) ? Response::HTTP_NO_CONTENT : Response::HTTP_OK;
+            $type = empty($activities) ? "warning" : "success";
+
+            if (empty($activities)) $msg = "Lo sentimos, no hay actividades programadas para esa fecha.";
+
             return new Response(
                 $this->renderView('activities/list_activities.html.twig', [
                         'activities' => $activities,
                         'msg' => $msg,
                         'statusCode' => $statusCode,
+                        "type" => $type
                     ]
                 ), Response::HTTP_OK);
         } catch (Exception $e) {
             $msg = 'Hubo un error en el formato de los parámetros.';
             $statusCode = Response::HTTP_BAD_REQUEST;
             $activities = [];
+            $type = "danger";
         }
 
         return new Response(
@@ -75,6 +83,7 @@ class ShowActivitiesController extends AbstractController
                     'activities' => $activities,
                     'msg' => $msg,
                     'statusCode' => $statusCode,
+                    'type' => $type
                 ]
             ), $statusCode);
     }
