@@ -24,18 +24,6 @@ class ShowActivitiesController extends AbstractController
 
     public function __invoke(Request $request): Response
     {
-        return new Response(
-            $this->renderView('activities/list_activities.html.twig', [
-                    'activities' => [],
-                    'msg' => '',
-                    'statusCode' => -1,
-                    'type' => ''
-                ]
-            ), Response::HTTP_OK);
-    }
-
-    public function returnActivitiesForThisDate(Request $request): Response
-    {
 
         $msg = '';
 
@@ -62,7 +50,7 @@ class ShowActivitiesController extends AbstractController
             $type = empty($activities) ? "warning" : "success";
 
             if (empty($activities)) $msg = "Lo sentimos, no hay actividades programadas para esa fecha.";
-
+            $request->attributes->set("activities", $activities);
             return new Response(
                 $this->renderView('activities/list_activities.html.twig', [
                         'activities' => $activities,

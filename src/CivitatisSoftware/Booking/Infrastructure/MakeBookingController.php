@@ -38,22 +38,36 @@ final class MakeBookingController extends AbstractController
 
         try {
             $this->makeBookingUseCase->makeABooking($activityID, $numPax, $totalPrice);
-            $msg = 'La reserva se ha hecho satisfactoriamente. ¡Disfrute de su actividad y gracias por confiar en Civitatis!';
-            $statusCode = Response::HTTP_OK;
-            $type = "success";
+            $request->query->set("msg", 'La reserva se ha hecho satisfactoriamente. ¡Disfrute de su actividad y gracias por confiar en Civitatis!');
+            $request->query->set("statusCode", Response::HTTP_OK);
+            $request->query->set("type", "success");
+//            $msg = 'La reserva se ha hecho satisfactoriamente. ¡Disfrute de su actividad y gracias por confiar en Civitatis!';
+//            $statusCode = Response::HTTP_OK;
+//            $type = "success";
         } catch (OptimisticLockException | ORMException $e) {
-            $msg = 'Hubo un problema en el servidor. Por favor, contacte con el administrador';
-            $statusCode = Response::HTTP_INTERNAL_SERVER_ERROR;
-            $type = "danger";
+//            $msg = 'Hubo un problema en el servidor. Por favor, contacte con el administrador';
+//            $statusCode = Response::HTTP_INTERNAL_SERVER_ERROR;
+//            $type = "danger";
+            $request->query->set("msg", 'Hubo un problema en el servidor. Por favor, contacte con el administrador');
+            $request->query->set("statusCode", Response::HTTP_INTERNAL_SERVER_ERROR);
+            $request->query->set("type", "danger");
         }
+        return $this->redirectToRoute('showInitialForm',
 
-        return new Response(
-            $this->renderView('activities/list_activities.html.twig', [
-                    'activities' => [],
-                    'msg' => $msg,
-                    'statusCode' => $statusCode,
-                    'type' => $type
-                ]
-            ), $statusCode);
+//            [
+//                    'activities' => [],
+//                    'msg' => $msg,
+//                    'statusCode' => $statusCode,
+//                    'type' => $type
+//            ]
+        );
+//        return new Response(
+//            $this->renderView('activities/list_activities.html.twig', [
+//                    'activities' => [],
+//                    'msg' => $msg,
+//                    'statusCode' => $statusCode,
+//                    'type' => $type
+//                ]
+//            ), $statusCode);
     }
 }

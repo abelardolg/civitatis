@@ -1,11 +1,11 @@
 showInitialForm:
     path: /
-    controller: App\CivitatisSoftware\Activity\Infrastructure\ShowActivitiesController
+    controller: App\CivitatisSoftware\Activity\Infrastructure\ShowInitialPageActivity
     methods: GET
 
 showActivities:
     path: /showActivitiesByDate
-    controller: App\CivitatisSoftware\Activity\Infrastructure\ShowActivitiesController::returnActivitiesForThisDate
+    controller: App\CivitatisSoftware\Activity\Infrastructure\ShowActivitiesController
     methods: POST
 
 makeABooking:
