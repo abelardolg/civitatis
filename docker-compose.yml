@@ -29,9 +29,11 @@ services:
 #      XDEBUG_CONFIG: remote_host=host.docker.internal remote_port=9005 # for osx users
     volumes:
       - ./:/appdata/www
-      - ./docker/php/xdebug-linux.ini:/usr/local/etc/php/conf.d/xdebug.ini #linux users
+#      - ./docker/php/xdebug-lin.ini:/usr/local/etc/php/conf.d/xdebug.ini #linux users
 #   - ./docker/php/xdebug-mac.ini:/usr/local/etc/php/conf.d/xdebug.ini #osx users
 #    - ~/.ssh/id_rsa:/home/appuser/.ssh/id_rsa
+#    env_file:
+#      - .env
     networks:
       - docker-symfony-network
     depends_on:

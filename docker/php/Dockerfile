@@ -28,6 +28,8 @@ RUN mv php-cs-fixer /usr/local/bin/php-cs-fixer
 
 RUN mkdir -p /appdata/www
 
+COPY ./xdebug-linux.ini /usr/local/etc/php/conf.d/xdebug.ini
+
 USER appuser
 
 WORKDIR /appdata/www
