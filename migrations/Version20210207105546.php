@@ -10,28 +10,22 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20210203095656 extends AbstractMigration
+final class Version20210207105546 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return 'Create an `ActivityRelated` table';
+        return '';
     }
 
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql("
-            CREATE TABLE activityRelated (
-                mainActivityID INT NOT NULL ,
-                relatedActivityID INT NOT NULL
-            )
-        ");
 
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql("DROP TABLE 'activityRelated'");
+
     }
 }

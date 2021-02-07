@@ -2,6 +2,9 @@
 
 namespace App\CivitatisSoftware\Shared;
 
+use App\CivitatisSoftware\Shared\ValueObjects\ID;
+use App\CivitatisSoftware\Shared\ValueObjects\NumPax;
+use App\CivitatisSoftware\Shared\ValueObjects\Price;
 use DateTime;
 use Exception;
 
@@ -35,16 +38,17 @@ final class ValidationHelper
      * @param $numPax
      * @param $totalPrice
      */
-    public static function areValidMakeABookingParameters(int $activityID, int $numPax, float $totalPrice): bool
+    public static function areValidMakeABookingParameters(ID $activityID, NumPax $numPax, Price $totalPrice): bool
     {
-        if (!self::areValidActivityIDAndNumPax($activityID, $numPax)) {
+//        dd($activityID, $numPax, $totalPrice);
+        if (!self::areValidActivityIDAndNumPax($activityID->getValue(), $numPax->getValue())) {
             return false;
         }
-        if (!filter_var($totalPrice, FILTER_VALIDATE_FLOAT)) {
+        if (!filter_var($totalPrice->getValue(), FILTER_VALIDATE_FLOAT)) {
             return false;
         }
 
-        if (0 > $totalPrice) {
+        if (0 > $totalPrice->getValue()) {
             return false;
         }
 

@@ -7,6 +7,9 @@ use App\CivitatisSoftware\Activity\Infrastructure\ActivityRepository;
 use App\CivitatisSoftware\ActivityRelated\Domain\ActivityRelated;
 use App\CivitatisSoftware\ActivityRelated\Infrastructure\ActivityRelatedRepository;
 use App\CivitatisSoftware\Shared\ComputeHelper;
+use App\CivitatisSoftware\Shared\ValueObjects\NonEmptyString;
+use App\CivitatisSoftware\Shared\ValueObjects\NumPax;
+use App\CivitatisSoftware\Shared\ValueObjects\Price;
 
 final class ShowDetailActivityUseCase
 {
@@ -29,12 +32,12 @@ final class ShowDetailActivityUseCase
              * @var ActivityRelated[] $relatedActivities
              */
             foreach ($relatedActivities as $relatedActivity) {
-                $activityRelated = $this->activityRepository->findDetailActivityByID($relatedActivity->getIdRelatedActivity());
+                $activityRelated = $this->activityRepository->findDetailActivityByID($relatedActivity->getRelatedActivityID());
                 $totalPrice = ComputeHelper::computeTotalPrice($activityRelated->getPricePerPax(), $numPax);
                 array_push($relatedActivitiesForThisActivity,
                     new ActivityDetail(
-                        $activityRelated->getTitle(), $activityRelated->getDescription(), $activityRelated->getAvailabilityStartDate(),
-                        $totalPrice, $numPax, []
+                        new NonEmptyString($activityRelated->getTitle()), new NonEmptyString($activityRelated->getDescription()),
+                        $activityRelated->getAvailabilityStartDate(), new Price($totalPrice), new NumPax($numPax), []
                     )
                 );
             }
@@ -42,8 +45,8 @@ final class ShowDetailActivityUseCase
             $totalPrice = ComputeHelper::computeTotalPrice($activity->getPricePerPax(), $numPax);
 
             return new ActivityDetail(
-                $activity->getTitle(), $activity->getDescription(), $activity->getAvailabilityStartDate(),
-                $totalPrice, $numPax, $relatedActivitiesForThisActivity
+                new NonEmptyString($activity->getTitle()), new NonEmptyString($activity->getDescription()), $activity->getAvailabilityStartDate(),
+                new Price($totalPrice), new NumPax($numPax), $relatedActivitiesForThisActivity
             );
         }
 

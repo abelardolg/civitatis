@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
     <entity name="App\CivitatisSoftware\ActivityRelated\Domain\ActivityRelated" table="activityRelated">
-        <id name="idMainActivity" type="integer"/>
-        <id name="idRelatedActivity" type="integer"/>
+        <id name="mainActivityID" type="idType"/>
+        <id name="relatedActivityID" type="idType"/>
     </entity>
 </doctrine-mapping>

@@ -19,7 +19,7 @@ class ActivityRelatedRepository extends BaseRepository
         $qb->select('ar');
 
         return $qb->from('ActivityRelated:ActivityRelated', 'ar')
-            ->where(':activityID = ar.idMainActivity')
+            ->where(':activityID = ar.mainActivityID')
             ->setParameter('activityID', $activityID)
             ->getQuery()
             ->getResult();
