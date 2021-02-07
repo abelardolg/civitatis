@@ -4,6 +4,8 @@ namespace App\CivitatisSoftware\Activity\Infrastructure;
 
 use App\CivitatisSoftware\Activity\Application\ShowDetailActivityUseCase;
 use App\CivitatisSoftware\Shared\ValidationHelper;
+use App\CivitatisSoftware\Shared\ValueObjects\ID;
+use App\CivitatisSoftware\Shared\ValueObjects\NumPax;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,7 +37,7 @@ class ShowDetailActivityController extends AbstractController
                 ), Response::HTTP_BAD_REQUEST);
         }
 
-        $activity = $this->showDetailActivityUseCase->getDetailActivity($activityID, $numPax);
+        $activity = $this->showDetailActivityUseCase->getDetailActivity(new ID($activityID), new NumPax($numPax));
 
         if (!$activity) {
             return new Response(

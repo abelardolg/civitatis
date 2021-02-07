@@ -15,9 +15,9 @@ final class ActivityRelated
         $this->setRelatedActivityID($relatedActivityID);
     }
 
-    public function getMainActivityID(): int
+    public function getMainActivityID(): ID
     {
-        return $this->mainActivityID->getValue();
+        return $this->mainActivityID;
     }
 
     public function setMainActivityID(ID $mainActivityID): void
@@ -25,9 +25,9 @@ final class ActivityRelated
         $this->mainActivityID = $mainActivityID;
     }
 
-    public function getRelatedActivityID(): int
+    public function getRelatedActivityID(): ID
     {
-        return $this->relatedActivityID->getValue();
+        return $this->relatedActivityID;
     }
 
     public function setRelatedActivityID(ID $relatedActivityID): void

@@ -4,6 +4,7 @@ namespace App\CivitatisSoftware\Activity\Infrastructure;
 
 use App\CivitatisSoftware\Activity\Domain\Activity;
 use App\CivitatisSoftware\Shared\BaseRepository;
+use App\CivitatisSoftware\Shared\ValueObjects\ID;
 use DateTime;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
@@ -29,7 +30,7 @@ class ActivityRepository extends BaseRepository
             ->getResult();
     }
 
-    public function findDetailActivityByID(int $activityID): Activity
+    public function findDetailActivityByID(ID $activityID): Activity
     {
         return $this->objectRepository->find($activityID);
     }

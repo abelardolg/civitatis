@@ -7,6 +7,7 @@ use App\CivitatisSoftware\Activity\Infrastructure\ActivityRepository;
 use App\CivitatisSoftware\ActivityRelated\Domain\ActivityRelated;
 use App\CivitatisSoftware\ActivityRelated\Infrastructure\ActivityRelatedRepository;
 use App\CivitatisSoftware\Shared\ComputeHelper;
+use App\CivitatisSoftware\Shared\ValueObjects\ID;
 use App\CivitatisSoftware\Shared\ValueObjects\NonEmptyString;
 use App\CivitatisSoftware\Shared\ValueObjects\NumPax;
 use App\CivitatisSoftware\Shared\ValueObjects\Price;
@@ -22,10 +23,12 @@ final class ShowDetailActivityUseCase
         $this->activityRelatedRepository = $activityRelatedRepository;
     }
 
-    public function getDetailActivity(int $activityID, int $numPax): ?ActivityDetail
+    public function getDetailActivity(ID $activityID, NumPax $numPax): ?ActivityDetail
     {
         $activity = $this->activityRepository->findDetailActivityByID($activityID);
-        $relatedActivities = $this->activityRelatedRepository->findRelatedActivitiesWithThisActivityID($activityID);
+
+        $relatedActivities = $this->activityRelatedRepository->findRelatedActivitiesWithThisActivityID($activityID->getValue());
+
         if ($activity) {
             $relatedActivitiesForThisActivity = [];
             /**
@@ -33,20 +36,20 @@ final class ShowDetailActivityUseCase
              */
             foreach ($relatedActivities as $relatedActivity) {
                 $activityRelated = $this->activityRepository->findDetailActivityByID($relatedActivity->getRelatedActivityID());
-                $totalPrice = ComputeHelper::computeTotalPrice($activityRelated->getPricePerPax(), $numPax);
+                $totalPrice = ComputeHelper::computeTotalPrice($activityRelated->getPricePerPax(), $numPax->getValue());
                 array_push($relatedActivitiesForThisActivity,
                     new ActivityDetail(
                         new NonEmptyString($activityRelated->getTitle()), new NonEmptyString($activityRelated->getDescription()),
-                        $activityRelated->getAvailabilityStartDate(), new Price($totalPrice), new NumPax($numPax), []
+                        $activityRelated->getAvailabilityStartDate(), new Price($totalPrice), $numPax, []
                     )
                 );
             }
 
-            $totalPrice = ComputeHelper::computeTotalPrice($activity->getPricePerPax(), $numPax);
+            $totalPrice = ComputeHelper::computeTotalPrice($activity->getPricePerPax(), $numPax->getValue());
 
             return new ActivityDetail(
                 new NonEmptyString($activity->getTitle()), new NonEmptyString($activity->getDescription()), $activity->getAvailabilityStartDate(),
-                new Price($totalPrice), new NumPax($numPax), $relatedActivitiesForThisActivity
+                new Price($totalPrice), $numPax, $relatedActivitiesForThisActivity
             );
         }
 
