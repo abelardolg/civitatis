@@ -10,7 +10,7 @@ use Exception;
 
 final class ValidationHelper
 {
-    public static function areValidShowActivitiesParameters(string $dateStr, int $numPax): bool
+    public static function areValidShowActivitiesParameters(string $dateStr, NumPax $numPax): bool
     {
         if (empty($dateStr)) {
             return false;
@@ -26,7 +26,7 @@ final class ValidationHelper
             return false;
         }
 
-        if ($numPax < 1) {
+        if ($numPax->getValue() < 1) {
             return false;
         }
 

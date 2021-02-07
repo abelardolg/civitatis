@@ -1,102 +1,92 @@
 {% extends 'base.html.twig' %}
+    {% block body %}
+        <form action="{{ path('showActivities') }}" method="POST">
+            <div class="ml-5 mt-5 form-group row">
+                <div class="row col-lg-12">
+                    <label class="col-form-label col-md-2">Elija una fecha para mostrar sus actividades.</label>
+                    <div class="col-md-8">
+                        <input class="form-control" type="date" name="date" id="date">
+                    </div>
+                </div>
+                <div class="row col-lg-12">
+                    <label class="col-form-label col-md-2">Núm. de personas que realizarán la actividad.</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" type="number" id="numPax" name="numPax" min="1" value="1"><br><br>
+                    </div>
+                </div>
+                <div class="col-lg-10">
+                    <button class="btn btn-primary" type="submit" style="float: right;">Mostrar resultados</button>
+                </div>
+            </div>
+        </form>
 
-{% block body %}
-    <form action="{{ path('showActivities') }}" method="POST">
-        <div class="ml-5 mt-5 form-group row">
-            <label class="col-form-label col-md-2">Elija una fecha para mostrar sus actividades.</label>
-            <div class="col-md-10">
-                <input class="form-control" type="date" name="date" id="date">
-            </div>
-            <label class="col-form-label col-md-2">Núm. de personas que realizarán la actividad.</label>
-            <div class="col-md-10">
-                <input class="form-control" type="number" id="quantity" name="quantity" min="1" value="1"><br><br>
-            </div>
-            <div class="col-md-10">
-                <button class="btn btn-primary" type="submit" style="float: right;">Mostrar resultados</button>
-            </div>
-        </div>
-    </form>
+        <div class="content pt-0">
 
-    <div class="content pt-0">
-
-        <!-- Basic table -->
-        {% if (activities | length > 0) %}
-            <!-- Basic tables title -->
-            <div class="mb-3">
-                <h6 class="mb-0 mt-5 font-weight-semibold">
-                    Actividades disponibles
-                </h6>
-            </div>
-            <!-- /basic tables title -->
-            <div class="card">
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th>Título</th>
-                            <th>Precio total</th>
-                            <th>Acciones</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for i in range(0, activities | length-1) %}
+            <!-- Basic table -->
+            {% if (activities | length > 0) %}
+                <!-- Basic tables title -->
+                <div class="mb-3">
+                    <h6 class="mb-0 mt-5 font-weight-semibold">
+                        Actividades disponibles
+                    </h6>
+                </div>
+                <!-- /basic tables title -->
+                <div class="card">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
                             <tr>
-                                <td>{{ activities[i].title }}</td>
-                                <td>{{ activities[i].totalPrice |number_format(2, '.', ',') |  currency_symbol }} €</td>
-                                <td>
-                                    <a href="{{ path('makeABooking', { 'idActivity': activities[i].id, 'numPax': activities[i].numPax, 'totalPrice':activities[i].totalPrice }) }}"
-                                       class="btn btn-outline-primary"> <i class="icon-coin-euro"></i> Comprar </a>
-                                    <a href="{{ path('showDetail', { 'activityID': activities[i].id, 'numPax': activities[i].numPax }) }}"
-                                       class="btn btn-outline-primary"> <span><i class="icon-file-eye"></i> Ver detalle</span>
-                                    </a>
-                                </td>
-
+                                <th>Título</th>
+                                <th>Precio total</th>
+                                <th>Acciones</th>
                             </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                            {% for i in range(0, activities | length-1) %}
+                                <tr>
+                                    <td>{{ activities[i].title }}</td>
+                                    <td>{{ activities[i].totalPrice |number_format(2, '.', ',') |  currency_symbol }}
+                                        €
+                                    </td>
+                                    <td>
+                                        <a href="{{ path('makeABooking', { 'idActivity': activities[i].id, 'numPax': activities[i].numPax, 'totalPrice':activities[i].totalPrice }) }}"
+                                           class="btn btn-outline-primary"> <i class="icon-coin-euro"></i> Comprar </a>
+                                        <a href="{{ path('showDetail', { 'activityID': activities[i].id, 'numPax': activities[i].numPax }) }}"
+                                           class="btn btn-outline-primary"> <span><i class="icon-file-eye"></i> Ver detalle</span>
+                                        </a>
+                                    </td>
+
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
-        {% else %}
-            {# {% if statusCode >= 400 %} #}
-            {% if statusCode > -1 %}
-                <div class="alert alert-{{ type }} border-0 alert-dismissible">
-                    <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
-                    <span class="font-weight-semibold"> {{ msg }} </span>
-                </div>
+            {% else %}
+                {# {% if statusCode >= 400 %} #}
+                {% if statusCode > -1 %}
+                    <div class="alert alert-{{ type }} border-0 alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+                        <span class="font-weight-semibold"> {{ msg }} </span>
+                    </div>
+                {% endif %}
+                {# {% endif %} #}
+                {# {% if statusCode == 200 %} #}
+                {# <div class="alert alert-success border-0 alert-dismissible"> #}
+                {# <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button> #}
+                {# <span class="font-weight-semibold">Operación completada con éxito.</span> {{ msg }} #}
+                {# </div> #}
+                {# {% endif %} #}
+                {# {% if statusCode == 204 %} #}
+                {# <div class="alert alert-warning border-0 alert-dismissible"> #}
+                {# <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button> #}
+                {# <span class="font-weight-semibold"></span> {{ msg }} #}
+                {# </div> #}
+                {# {% endif %} #}
             {% endif %}
-            {# {% endif %} #}
-            {# {% if statusCode == 200 %} #}
-            {# <div class="alert alert-success border-0 alert-dismissible"> #}
-            {# <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button> #}
-            {# <span class="font-weight-semibold">Operación completada con éxito.</span> {{ msg }} #}
-            {# </div> #}
-            {# {% endif %} #}
-            {# {% if statusCode == 204 %} #}
-            {# <div class="alert alert-warning border-0 alert-dismissible"> #}
-            {# <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button> #}
-            {# <span class="font-weight-semibold"></span> {{ msg }} #}
-            {# </div> #}
-            {# {% endif %} #}
-        {% endif %}
-    </div>
-{% endblock %}
+        </div>
+    {% endblock %}
 {% block javascripts %}
     {{ parent() }}
-    <script>
-        $('#date').val(new Date().toJSON().slice(0, 10));
-    </script>
 {% endblock %}
-
-
-{# #}
-{# <li>{{ activity.id }}</li> #}
-{# <li>{{ activity.title }}</li> #}
-{# <li>{{ activity.description }}</li> #}
-{# <li>{{ activity.availabilityStartDate | date }}</li> #}
-{# <li>{{ activity.availabilityEndDate | date }}</li> #}
-{# <li>{{ activity.pricePerPax  }}</li> #}
-{# <li>{{ activity.popularity  }}</li> #}
-{# { #}
-
 

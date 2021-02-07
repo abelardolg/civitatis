@@ -7,7 +7,7 @@ use App\CivitatisSoftware\Shared\valueObjects\NonEmptyString;
 use App\CivitatisSoftware\Shared\ValueObjects\NumPax;
 use App\CivitatisSoftware\Shared\ValueObjects\Price;
 
-final class ActivityList
+class ActivityList
 {
     private ID $id;
     private NonEmptyString $title;

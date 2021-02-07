@@ -7,7 +7,7 @@ use App\CivitatisSoftware\Shared\ValueObjects\NumPax;
 use App\CivitatisSoftware\Shared\ValueObjects\Price;
 use DateTime;
 
-final class ActivityDetail
+class ActivityDetail
 {
     private NonEmptyString $title;
     private NonEmptyString $description;

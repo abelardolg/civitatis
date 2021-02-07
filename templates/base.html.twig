@@ -30,19 +30,20 @@
     <!-- /Main sidebar -->
 
     <!-- Main content -->
-    <div class="content-wrapper">
 
+    <div class="content-wrapper col-lg-12">
         <!-- Content area -->
         {% block body %}{% endblock %}
         <!-- /content area -->
-
         <!-- Footer -->
         {% block footer %}
             {{ include('./partials/footer.html') }}
         {% endblock %}
-        <!-- /footer -->
-
+        <!-- /Footer -->
     </div>
+
+    <!-- /footer -->
+
     <!-- /main content -->
 
 </div>

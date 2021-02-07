@@ -9,7 +9,7 @@ use App\CivitatisSoftware\Shared\ValueObjects\Price;
 use DateTime;
 use InvalidArgumentException;
 
-final class Activity
+class Activity
 {
     const MAX_TITLE_LENGTH = 64;
     const MAX_POPULARITY = 10;

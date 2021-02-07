@@ -24,15 +24,15 @@ final class ShowAllActivitiesUseCase
     /**
      * @return array|array[]
      */
-    public function showAllActivitiesByDate(DateTime $date, int $numPax = 1): array
+    public function showAllActivitiesByDate(DateTime $date, NumPax $numPax): array
     {
         $activities = $this->activityRepository->findActivitiesInThisDate($date);
 
         return array_map(function (Activity $activity) use ($numPax) {
-            $totalPrice = ComputeHelper::computeTotalPrice($activity->getPricePerPax(), $numPax);
+            $totalPrice = ComputeHelper::computeTotalPrice($activity->getPricePerPax(), $numPax->getValue());
 
 //            public function __construct(ID $id, NonEmptyString $title, Price $totalPrice, NumPax $numPax)
-            return new ActivityList(new ID($activity->getId()), new NonEmptyString($activity->getTitle()), new Price($totalPrice), new NumPax($numPax));
+            return new ActivityList(new ID($activity->getId()), new NonEmptyString($activity->getTitle()), new Price($totalPrice), $numPax);
         }, $activities);
     }
 }
