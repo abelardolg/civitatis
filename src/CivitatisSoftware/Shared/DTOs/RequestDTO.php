@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\CivitatisSoftware\Shared\DTO;
+namespace App\CivitatisSoftware\Shared\DTOs;
 
 use Symfony\Component\HttpFoundation\Request;
 

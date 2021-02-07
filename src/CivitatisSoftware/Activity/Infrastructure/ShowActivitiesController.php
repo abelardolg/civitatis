@@ -7,7 +7,6 @@ use App\CivitatisSoftware\Shared\ValidationHelper;
 use DateTime;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class ShowActivitiesController extends AbstractController
@@ -22,14 +21,14 @@ class ShowActivitiesController extends AbstractController
         $this->showAllActivitiesUseCase = $showAllActivitiesUseCase;
     }
 
-    public function __invoke(Request $request): Response
+    public function __invoke(ShowActivitiesRequest $request): Response
     {
         $msg = '';
 
-        $dateStr = $request->get('date');
-        $numPax = $request->get('quantity');
+        $dateStr = $request->getDate();
+        $numPax = $request->getNumPax();
 
-        if (!ValidationHelper::areValidShowActivitiesParameters($dateStr, intval($numPax))) {
+        if (!ValidationHelper::areValidShowActivitiesParameters($dateStr, $numPax)) {
             return new Response(
                 $this->renderView('activities/list_activities.html.twig', [
                         'activities' => [],
@@ -42,15 +41,10 @@ class ShowActivitiesController extends AbstractController
         }
 
         try {
-            $date = new DateTime($dateStr);
-            $activities = $this->showAllActivitiesUseCase->showAllActivitiesByDate($date, $numPax);
+            $activities = $this->showAllActivitiesUseCase->showAllActivitiesByDate(new DateTime($dateStr), $numPax);
             $statusCode = empty($activities) ? Response::HTTP_NO_CONTENT : Response::HTTP_OK;
             $type = empty($activities) ? 'warning' : 'success';
-
-            if (empty($activities)) {
-                $msg = 'Lo sentimos, no hay actividades programadas para esa fecha.';
-            }
-            $request->attributes->set('activities', $activities);
+            $msg = (empty($activities)) ? 'Lo sentimos, no hay actividades programadas para esa fecha.' : "";
 
             return new Response(
                 $this->renderView('activities/list_activities.html.twig', [
@@ -61,7 +55,7 @@ class ShowActivitiesController extends AbstractController
                     ]
                 ), Response::HTTP_OK);
         } catch (Exception $e) {
-            $msg = 'Hubo un error en el formato de los parámetros.';
+            $msg = $e->getMessage(); //'Hubo un error en el formato de los parámetros.';
             $statusCode = Response::HTTP_BAD_REQUEST;
             $activities = [];
             $type = 'danger';

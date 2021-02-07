@@ -8,7 +8,7 @@ use App\CivitatisSoftware\Shared\ValueObjects\Price;
 use DateTime;
 use InvalidArgumentException;
 
-final class Booking
+class Booking
 {
     private ID $id;
 

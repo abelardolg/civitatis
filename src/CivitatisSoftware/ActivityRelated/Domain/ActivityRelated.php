@@ -4,7 +4,7 @@ namespace App\CivitatisSoftware\ActivityRelated\Domain;
 
 use App\CivitatisSoftware\Shared\ValueObjects\ID;
 
-final class ActivityRelated
+class ActivityRelated
 {
     private ID $mainActivityID;
     private ID $relatedActivityID;
