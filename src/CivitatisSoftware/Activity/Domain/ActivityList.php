@@ -2,16 +2,21 @@
 
 namespace App\CivitatisSoftware\Activity\Domain;
 
+use App\CivitatisSoftware\Shared\ValueObjects\ID;
+use App\CivitatisSoftware\Shared\valueObjects\NonEmptyString;
+use App\CivitatisSoftware\Shared\ValueObjects\NumPax;
+use App\CivitatisSoftware\Shared\ValueObjects\Price;
+
 final class ActivityList
 {
-    private int $id;
-    private string $title;
-    private float $totalPrice;
-    private int $numPax;
+    private ID $id;
+    private NonEmptyString $title;
+    private Price $totalPrice;
+    private NumPax $numPax;
 
-    public function __construct(int $id, string $title, float $totalPrice, int $numPax)
+    public function __construct(ID $id, NonEmptyString $title, Price $totalPrice, NumPax $numPax)
     {
-        $this->id = $id;
+        $this->setID($id);
         $this->title = $title;
         $this->totalPrice = $totalPrice;
         $this->numPax = $numPax;
@@ -19,21 +24,26 @@ final class ActivityList
 
     public function getId(): int
     {
-        return $this->id;
+        return $this->id->getValue();
+    }
+
+    private function setID(ID $id): void
+    {
+        $this->id = $id;
     }
 
     public function getTitle(): string
     {
-        return $this->title;
+        return $this->title->getValue();
     }
 
     public function getTotalPrice(): float
     {
-        return $this->totalPrice;
+        return $this->totalPrice->getValue();
     }
 
     public function getNumPax(): int
     {
-        return $this->numPax;
+        return $this->numPax->getValue();
     }
 }

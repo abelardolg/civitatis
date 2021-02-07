@@ -2,24 +2,27 @@
 
 namespace App\CivitatisSoftware\Booking\Domain;
 
+use App\CivitatisSoftware\Shared\ValueObjects\ID;
+use App\CivitatisSoftware\Shared\ValueObjects\NumPax;
+use App\CivitatisSoftware\Shared\ValueObjects\Price;
 use DateTime;
 use InvalidArgumentException;
 
 final class Booking
 {
-    private int $id;
+    private ID $id;
 
-    private int $activity_id;
-    private int $numPax;
-    private float $price;
+    private ID $activity_id;
+    private NumPax $numPax;
+    private Price $price;
     private DateTime $bookDate;
     private DateTime $doneDate;
     private DateTime $createdAt;
     private DateTime $updatedAt;
 
-    public function __construct(int $activityID, int $numPax, float $price, DateTime $bookDate, DateTime $doneDate)
+    public function __construct(ID $activityID, NumPax $numPax, Price $price, DateTime $bookDate, DateTime $doneDate)
     {
-        $this->activity_id = $activityID;
+        $this->setActivityID($activityID);
         $this->setNumPax($numPax);
         $this->setPrice($price);
         $this->setBookDate($bookDate);
@@ -31,18 +34,11 @@ final class Booking
 
     public function getActivityId(): int
     {
-        return $this->activity_id;
+        return $this->activity_id->getValue();
     }
 
-    private function setPrice(float $price): void
+    private function setPrice(Price $price): void
     {
-        if (!filter_var($price, FILTER_VALIDATE_FLOAT)) {
-            throw new InvalidArgumentException('El precio de la reserva debe estar reflejado con valores decimales (Ej. 34.0 €)');
-        }
-        if ($price < 0) {
-            throw new InvalidArgumentException('El precio de la reserva no puede ser negativo');
-        }
-
         $this->price = $price;
     }
 
@@ -79,26 +75,22 @@ final class Booking
 
     public function getId(): int
     {
-        return $this->id;
+        return $this->id->getValue();
     }
 
     public function getNumPax(): int
     {
-        return $this->numPax;
+        return $this->numPax->getValue();
     }
 
-    private function setNumPax(int $numPax): void
+    private function setNumPax(NumPax $numPax): void
     {
-        if ($numPax < 1) {
-            throw new InvalidArgumentException('La reserva ha de tener al menos 1 persona.');
-        }
-
         $this->numPax = $numPax;
     }
 
     public function getPrice(): float
     {
-        return $this->price;
+        return $this->price->getValue();
     }
 
     public function getDoneDate(): DateTime
@@ -114,5 +106,10 @@ final class Booking
     public function getUpdatedAt(): DateTime
     {
         return $this->updatedAt;
+    }
+
+    private function setActivityID(ID $activityID): void
+    {
+        $this->activity_id = $activityID;
     }
 }

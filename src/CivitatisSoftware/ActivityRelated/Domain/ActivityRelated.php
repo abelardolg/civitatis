@@ -2,24 +2,36 @@
 
 namespace App\CivitatisSoftware\ActivityRelated\Domain;
 
+use App\CivitatisSoftware\Shared\ValueObjects\ID;
+
 final class ActivityRelated
 {
-    private int $idMainActivity;
-    private int $idRelatedActivity;
+    private ID $mainActivityID;
+    private ID $relatedActivityID;
 
-    public function __construct(int $idMainActivity, int $idRelatedActivity)
+    public function __construct(ID $mainActivityID, ID $relatedActivityID)
     {
-        $this->idMainActivity = $idMainActivity;
-        $this->idRelatedActivity = $idRelatedActivity;
+        $this->setMainActivityID($mainActivityID);
+        $this->setRelatedActivityID($relatedActivityID);
     }
 
-    public function getIdMainActivity(): int
+    public function getMainActivityID(): int
     {
-        return $this->idMainActivity;
+        return $this->mainActivityID->getValue();
     }
 
-    public function getIdRelatedActivity(): int
+    public function setMainActivityID(ID $mainActivityID): void
     {
-        return $this->idRelatedActivity;
+        $this->mainActivityID = $mainActivityID;
+    }
+
+    public function getRelatedActivityID(): int
+    {
+        return $this->relatedActivityID->getValue();
+    }
+
+    public function setRelatedActivityID(ID $relatedActivityID): void
+    {
+        $this->relatedActivityID = $relatedActivityID;
     }
 }

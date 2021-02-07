@@ -2,6 +2,10 @@
 
 namespace App\CivitatisSoftware\Activity\Domain;
 
+use App\CivitatisSoftware\Shared\ValueObjects\ID;
+use App\CivitatisSoftware\Shared\ValueObjects\NonEmptyString;
+use App\CivitatisSoftware\Shared\ValueObjects\Popularity;
+use App\CivitatisSoftware\Shared\ValueObjects\Price;
 use DateTime;
 use InvalidArgumentException;
 
@@ -10,41 +14,82 @@ final class Activity
     const MAX_TITLE_LENGTH = 64;
     const MAX_POPULARITY = 10;
 
-    private int $id;
-    private string $title;
-    private string $description;
+    private ID $id;
+    private NonEmptyString $title;
+    private NonEmptyString $description;
     private Datetime $availabilityStartDate;
     private Datetime $availabilityEndDate;
-    private float $pricePerPax;
-    private int $popularity;
+    private Price $pricePerPax;
+    private Popularity $popularity;
     private Datetime $createdAt;
     private Datetime $updatedAt;
 
-    public function __construct(int $id, string $title, string $description, DateTime $availabilityStartDate,
-                                DateTime $availabilityEndDate, float $pricePerPax, int $popularity)
+    public function __construct(ID $id, string $title, NonEmptyString $description, DateTime $availabilityStartDate,
+                                DateTime $availabilityEndDate, Price $pricePerPax, Popularity $popularity)
     {
-        $this->id = $id;
+        $this->setID($id);
         $this->setTitle($title);
-        $this->description = $description;
+        $this->setDescription($description);
         $this->setAvailabilityStartDate($availabilityStartDate);
         $this->setAvailabilityEndDate($availabilityEndDate);
-        $this->setPricePerPax(floatval($pricePerPax));
+        $this->setPricePerPax($pricePerPax);
         $this->setPopularity($popularity);
         $this->createdAt = new DateTime();
         $this->markAsUpdated();
     }
 
-    public function getTitle(): string
+    public function getId(): ?int
     {
-        return $this->title;
+        return $this->id->getValue();
     }
 
-    private function setTitle(string $title): void
+    private function setID(ID $id): void
     {
+        $this->id = $id;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title->getValue();
+    }
+
+    public function setTitle(string $title): void
+    {
+        var_dump($title);
         if (strlen($title) > self::MAX_TITLE_LENGTH) {
             throw new InvalidArgumentException(sprintf('La longitud del título de esta actividad no debe exceder de %d caracteres', self::MAX_TITLE_LENGTH));
         }
-        $this->title = $title;
+        $this->title = new NonEmptyString($title);
+    }
+
+    public function getDescription(): string
+    {
+        return $this->description->getValue();
+    }
+
+    public function setDescription(NonEmptyString $description): void
+    {
+        $this->description = $description;
+    }
+
+    public function getPricePerPax(): float
+    {
+        return $this->pricePerPax->getValue();
+    }
+
+    private function setPricePerPax(Price $pricePerPax): void
+    {
+        $this->pricePerPax = $pricePerPax;
+    }
+
+    public function getPopularity(): int
+    {
+        return $this->popularity->getValue();
+    }
+
+    private function setPopularity(Popularity $popularity): void
+    {
+        $this->popularity = $popularity;
     }
 
     public function getAvailabilityStartDate(): DateTime
@@ -81,51 +126,6 @@ final class Activity
         $this->availabilityEndDate = $availabilityEndDate;
     }
 
-    private function setPricePerPax(float $pricePerPax): void
-    {
-        if (!filter_var($pricePerPax, FILTER_VALIDATE_FLOAT)) {
-            throw new InvalidArgumentException('El precio de la actividad debe estar reflejado con valores decimales (Ej. 34.0 €)');
-        }
-        if ($pricePerPax < 0) {
-            throw new InvalidArgumentException('El precio de la actividad no puede ser negativo');
-        }
-
-        $this->pricePerPax = $pricePerPax;
-    }
-
-    private function setPopularity(int $popularity): void
-    {
-        if ($popularity > self::MAX_POPULARITY) {
-            throw new InvalidArgumentException(sprintf('La popularidad de la actividad no debe exceder de %d puntos', self::MAX_POPULARITY));
-        }
-        $this->popularity = $popularity;
-    }
-
-    public function markAsUpdated(): void
-    {
-        $this->updatedAt = new DateTime();
-    }
-
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    public function getDescription(): string
-    {
-        return $this->description;
-    }
-
-    public function getPricePerPax(): float
-    {
-        return $this->pricePerPax;
-    }
-
-    public function getPopularity(): int
-    {
-        return $this->popularity;
-    }
-
     public function getCreatedAt(): DateTime
     {
         return $this->createdAt;
@@ -134,5 +134,10 @@ final class Activity
     public function getUpdatedAt(): DateTime
     {
         return $this->updatedAt;
+    }
+
+    public function markAsUpdated(): void
+    {
+        $this->updatedAt = new DateTime();
     }
 }

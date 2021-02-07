@@ -4,6 +4,9 @@ namespace App\CivitatisSoftware\Booking\Aplicacion;
 
 use App\CivitatisSoftware\Booking\Domain\Booking;
 use App\CivitatisSoftware\Booking\Infrastructure\BookingRepository;
+use App\CivitatisSoftware\Shared\ValueObjects\ID;
+use App\CivitatisSoftware\Shared\ValueObjects\NumPax;
+use App\CivitatisSoftware\Shared\ValueObjects\Price;
 use DateInterval;
 use DateTime;
 use Doctrine\ORM\OptimisticLockException;
@@ -22,7 +25,7 @@ class MakeBookingUseCase
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function makeABooking(int $activityID, int $numPax, float $totalPrice): void
+    public function makeABooking(ID $activityID, NumPax $numPax, Price $totalPrice): void
     {
         $today = (new DateTime())->add(new DateInterval('P01D'));
         $doneDate = (new DateTime())->add(new DateInterval('P06D'));

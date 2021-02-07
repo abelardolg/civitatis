@@ -6,6 +6,10 @@ use App\CivitatisSoftware\Activity\Domain\Activity;
 use App\CivitatisSoftware\Activity\Domain\ActivityList;
 use App\CivitatisSoftware\Activity\Infrastructure\ActivityRepository;
 use App\CivitatisSoftware\Shared\ComputeHelper;
+use App\CivitatisSoftware\Shared\ValueObjects\ID;
+use App\CivitatisSoftware\Shared\ValueObjects\NonEmptyString;
+use App\CivitatisSoftware\Shared\ValueObjects\NumPax;
+use App\CivitatisSoftware\Shared\ValueObjects\Price;
 use DateTime;
 
 final class ShowAllActivitiesUseCase
@@ -27,7 +31,8 @@ final class ShowAllActivitiesUseCase
         return array_map(function (Activity $activity) use ($numPax) {
             $totalPrice = ComputeHelper::computeTotalPrice($activity->getPricePerPax(), $numPax);
 
-            return new ActivityList($activity->getId(), $activity->getTitle(), $totalPrice, $numPax);
+//            public function __construct(ID $id, NonEmptyString $title, Price $totalPrice, NumPax $numPax)
+            return new ActivityList(new ID($activity->getId()), new NonEmptyString($activity->getTitle()), new Price($totalPrice), new NumPax($numPax));
         }, $activities);
     }
 }
